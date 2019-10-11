@@ -1,4 +1,10 @@
-﻿namespace BetterBlocks
+﻿using BetterBlocks.Core;
+using BetterBlocks.UI.Models;
+using BetterBlocks.UI.Views;
+using Rhino.PlugIns;
+using Rhino.UI;
+
+namespace BetterBlocks
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived
@@ -25,5 +31,34 @@
         // You can override methods here to change the plug-in behavior on
         // loading and shut down, add options pages to the Rhino _Option command
         // and maintain plug-in wide options in a document.
+        protected override LoadReturnCode OnLoad(ref string errorMessage)
+        {
+            // make sure our panel loads nice :)
+            Panels.Show += PanelsOnShow;
+            return base.OnLoad(ref errorMessage);
+        }
+
+        protected override void OnShutdown()
+        {
+            // clear event handlers
+            Panels.Show -= PanelsOnShow;
+
+            base.OnShutdown();
+        }
+
+        private void PanelsOnShow(object sender, ShowPanelEventArgs e)
+        {
+            // only do something if its actually for our panel
+            if (e.PanelId != BlockManagerPanel.PanelId) return;
+
+            // get instance of our panel
+            var panel = Panels.GetPanel<BlockManagerPanel>(e.Document);
+
+            // check if already initialized with view-model
+            if (panel.IsModelInitialized) return;
+
+            // initialize new view-model
+            panel.SetBlockTreeModel(new BlockTreeModel(new BlockWatcher(e.Document)));
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BetterBlocks.Core;
+using BetterBlocks.UI.Models;
+using BetterBlocks.UI.Views;
 using Rhino;
 using Rhino.Commands;
 using Rhino.Geometry;
@@ -45,7 +48,12 @@ namespace BetterBlocks.Commands
             RhinoApp.WriteLine(prompt);
 
             // toggle visible
-            if (!visible) Panels.OpenPanel(panelId);
+            if (!visible)
+            {
+                Panels.OpenPanel(panelId);
+                var panel = Panels.GetPanel<BlockManagerPanel>(doc);
+                panel.SetBlockTreeModel(new BlockTreeModel(new BlockWatcher(doc)));
+            }
             else Panels.ClosePanel(panelId);
 
             return Result.Success;
