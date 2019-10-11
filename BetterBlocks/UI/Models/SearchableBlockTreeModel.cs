@@ -28,12 +28,18 @@ namespace BetterBlocks.UI.Models
 
         private void Filter()
         {
-            if (string.IsNullOrEmpty(_search_string)) return;
-
             Clear();
-            AddRange(from item in _original_collection
-                where Regex.IsMatch(((TreeGridItem) item).Values[0].ToString(), _search_string)
-                select item);
+
+            if (string.IsNullOrEmpty(_search_string))
+            {
+                AddRange(_original_collection);
+            }
+            else
+            {
+                AddRange(from item in _original_collection
+                    where Regex.IsMatch(((TreeGridItem)item).Values[0].ToString(), _search_string)
+                    select item);
+            }
         }
     }
 }

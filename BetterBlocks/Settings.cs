@@ -11,6 +11,6 @@ namespace BetterBlocks
     public static class Settings
     {
         public static DefinedViewportProjection BlockManagerPreviewProjection = DefinedViewportProjection.Perspective;
-        public static DisplayMode BlockManagerPreviewDisplayMode = DisplayMode.RenderPreview;
+        public static DisplayMode BlockManagerPreviewDisplayMode = DisplayMode.Shaded;
     }
 }

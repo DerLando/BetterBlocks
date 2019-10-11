@@ -46,6 +46,7 @@ namespace BetterBlocks.UI.Models
         // If you want to implement both "*" and "?"
         public static String WildCardToRegular(this String value)
         {
+            if (String.IsNullOrEmpty(value)) return String.Empty;
             return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
         }
 

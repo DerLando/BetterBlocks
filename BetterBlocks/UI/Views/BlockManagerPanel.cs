@@ -20,6 +20,7 @@ namespace BetterBlocks.UI.Views
 
         // Controls
         private TreeGridView _tg_Blocks = new TreeGridView();
+        private GroupBox _gB_Filter = new GroupBox{Text = "Filter"};
         private SearchBox _sB_Search = new SearchBox();
         private GroupBox _gB_Preview = new GroupBox {Text = "Preview"};
         private ImageView _iV_Preview = new ImageView();
@@ -41,6 +42,7 @@ namespace BetterBlocks.UI.Views
             _sB_Search.TextChanged += On_sB_Search_TextChanged;
 
             // set up group boxes
+            _gB_Filter.Content = _sB_Search;
             _gB_Preview.Content = _iV_Preview;
             _gB_Description.Content = _lbl_Description;
 
@@ -64,10 +66,11 @@ namespace BetterBlocks.UI.Views
             layout.Padding = 10;
             layout.Spacing = new Size(5, 5);
 
-            layout.Add(_sB_Search);
+            layout.Add(_gB_Filter);
             layout.Add(_tg_Blocks);
             layout.Add(_gB_Preview);
             layout.Add(_gB_Description);
+            layout.Add(null);
 
             Content = layout;
         }
@@ -84,7 +87,7 @@ namespace BetterBlocks.UI.Views
             var def = ((TreeGridItem) _tg_Blocks.SelectedItem).Tag as InstanceDefinition;
 
             // set preview item
-            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(100, 75) : _iV_Preview.Size.ToDrawingSize(); 
+            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(200, 100) : _iV_Preview.Size.ToDrawingSize(); 
             var image = def.CreatePreviewBitmap(Settings.BlockManagerPreviewProjection,
                 Settings.BlockManagerPreviewDisplayMode, size);
             _iV_Preview.Image = image.ToEto();
