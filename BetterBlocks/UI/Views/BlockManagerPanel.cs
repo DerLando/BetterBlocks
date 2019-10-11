@@ -19,12 +19,12 @@ namespace BetterBlocks.UI.Views
         private SearchableBlockTreeModel _tree_model;
 
         // Controls
-        private TreeGridView _tg_Blocks = new TreeGridView();
-        private GroupBox _gB_Filter = new GroupBox{Text = "Filter"};
+        private TreeGridView _tg_Blocks = new TreeGridView {ContextMenu = new BlockTreeContextMenu()};
+        private DynamicGroup _gB_Filter = new DynamicGroup{Title = "Filter"};
         private SearchBox _sB_Search = new SearchBox();
-        private GroupBox _gB_Preview = new GroupBox {Text = "Preview"};
+        private DynamicGroup _gB_Preview = new DynamicGroup {Title = "Preview"};
         private ImageView _iV_Preview = new ImageView();
-        private GroupBox _gB_Description = new GroupBox {Text = "Description"};
+        private DynamicGroup _gB_Description = new DynamicGroup {Title = "Description"};
         private Label _lbl_Description = new Label();
 
         // Public auto-initialized properties
@@ -42,9 +42,9 @@ namespace BetterBlocks.UI.Views
             _sB_Search.TextChanged += On_sB_Search_TextChanged;
 
             // set up group boxes
-            _gB_Filter.Content = _sB_Search;
-            _gB_Preview.Content = _iV_Preview;
-            _gB_Description.Content = _lbl_Description;
+            _gB_Filter.Add(_sB_Search);
+            _gB_Preview.Add(_iV_Preview);
+            _gB_Description.Add(_lbl_Description);
 
             // set up columns of treegridview
             // name column
@@ -66,10 +66,10 @@ namespace BetterBlocks.UI.Views
             layout.Padding = 10;
             layout.Spacing = new Size(5, 5);
 
-            layout.Add(_gB_Filter);
+            layout.Add(_gB_Filter.Create(layout));
             layout.Add(_tg_Blocks);
-            layout.Add(_gB_Preview);
-            layout.Add(_gB_Description);
+            layout.Add(_gB_Preview.Create(layout));
+            layout.Add(_gB_Description.Create(layout));
             layout.Add(null);
 
             Content = layout;
