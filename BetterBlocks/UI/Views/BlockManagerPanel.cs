@@ -1,13 +1,11 @@
-using System;
-using System.Linq;
-using System.Runtime.InteropServices;
-using BetterBlocks.Core;
 using BetterBlocks.UI.Models;
-using Eto.Forms;
 using Eto.Drawing;
+using Eto.Forms;
 using Rhino.DocObjects;
 using Rhino.UI;
+using System;
 using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 
 namespace BetterBlocks.UI.Views
 {
@@ -16,22 +14,25 @@ namespace BetterBlocks.UI.Views
     {
         // Fields
         private readonly uint _document_sn;
+
         private SearchableBlockTreeModel _tree_model;
 
         // Controls
-        private TreeGridView _tg_Blocks = new TreeGridView {ContextMenu = new BlockTreeContextMenu()};
-        private DynamicGroup _gB_Filter = new DynamicGroup{Title = "Filter"};
+        private TreeGridView _tg_Blocks = new TreeGridView { ContextMenu = new BlockTreeContextMenu() };
+
+        private DynamicGroup _gB_Filter = new DynamicGroup { Title = "Filter" };
         private SearchBox _sB_Search = new SearchBox();
-        private DynamicGroup _gB_Preview = new DynamicGroup {Title = "Preview"};
+        private DynamicGroup _gB_Preview = new DynamicGroup { Title = "Preview" };
         private ImageView _iV_Preview = new ImageView();
-        private DynamicGroup _gB_Description = new DynamicGroup {Title = "Description"};
+        private DynamicGroup _gB_Description = new DynamicGroup { Title = "Description" };
         private Label _lbl_Description = new Label();
 
         // Public auto-initialized properties
         public static Guid PanelId => typeof(BlockManagerPanel).GUID;
+
         public bool IsModelInitialized => !(_tree_model is null);
 
-		public BlockManagerPanel(uint documentSerialNumber)
+        public BlockManagerPanel(uint documentSerialNumber)
         {
             // sn field
             _document_sn = documentSerialNumber;
@@ -84,10 +85,10 @@ namespace BetterBlocks.UI.Views
 
         private void On_tg_Blocks_SelectedRowsChanged(object sender, EventArgs e)
         {
-            var def = ((TreeGridItem) _tg_Blocks.SelectedItem).Tag as InstanceDefinition;
+            var def = ((TreeGridItem)_tg_Blocks.SelectedItem).Tag as InstanceDefinition;
 
             // set preview item
-            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(200, 100) : _iV_Preview.Size.ToDrawingSize(); 
+            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(200, 100) : _iV_Preview.Size.ToDrawingSize();
             var image = def.CreatePreviewBitmap(Settings.BlockManagerPreviewProjection,
                 Settings.BlockManagerPreviewDisplayMode, size);
             _iV_Preview.Image = image.ToEto();
@@ -101,7 +102,7 @@ namespace BetterBlocks.UI.Views
 
         private void On_tg_Blocks_CellEdited(object sender, GridViewCellEventArgs e)
         {
-            var name = ((TreeGridItem) e.Item).Values[0].ToString();
+            var name = ((TreeGridItem)e.Item).Values[0].ToString();
             if (string.IsNullOrEmpty(name)) return;
             var def = ((TreeGridItem)e.Item).Tag as InstanceDefinition;
             def.Name = name;
@@ -113,7 +114,7 @@ namespace BetterBlocks.UI.Views
             _tg_Blocks.Invalidate();
         }
 
-        #endregion
+        #endregion Event handlers
 
         public void SetBlockTreeModel(SearchableBlockTreeModel model)
         {
@@ -137,6 +138,7 @@ namespace BetterBlocks.UI.Views
         }
 
         #region IPanel methods
+
         public void PanelShown(uint documentSerialNumber, ShowPanelReason reason)
         {
             // Called when the panel tab is made visible, in Mac Rhino this will happen
@@ -158,6 +160,7 @@ namespace BetterBlocks.UI.Views
             // Called when the document or panel container is closed/destroyed
             Rhino.RhinoApp.WriteLine($"Panel closing for document {documentSerialNumber}, this serial number {_document_sn} should be the same");
         }
+
         #endregion IPanel methods
     }
 }

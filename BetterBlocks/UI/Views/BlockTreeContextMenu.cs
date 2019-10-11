@@ -1,18 +1,22 @@
 using System;
+using System.Linq;
+using BetterBlocks.UI.EtoCommands;
 using Eto.Forms;
 using Eto.Drawing;
+using Rhino.DocObjects;
 
 namespace BetterBlocks.UI.Views
 {
 	public class BlockTreeContextMenu : ContextMenu
-	{
+    {
+
 		public BlockTreeContextMenu()
         {
+            var definition = (InstanceDefinition)((TreeGridItem) ((TreeGridView) FindParent(typeof(TreeGridView))).SelectedItem).Tag;
 
-            Items.Add(new ButtonMenuItem{Text = "Button"});
-            Items.Add(new CheckMenuItem {Text = "Check"});
-            Items.Add(new SeparatorMenuItem());
-            Items.Add(new RadioMenuItem {Text = "Radio"});
+            Command select = new SelectBlockInstancesByParent(definition);
+
+            Items.Add(select.CreateMenuItem());
 
         }
 	}
