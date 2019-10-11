@@ -53,12 +53,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bbShowManager.cs" />
+    <Compile Include="Commands\bbShowManager.cs" />
     <Compile Include="BetterBlocksPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Views\BlockManagerPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

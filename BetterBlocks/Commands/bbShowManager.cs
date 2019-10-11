@@ -5,13 +5,17 @@ using Rhino.Commands;
 using Rhino.Geometry;
 using Rhino.Input;
 using Rhino.Input.Custom;
+using Rhino.UI;
 
-namespace BetterBlocks
+namespace BetterBlocks.Commands
 {
     public class bbShowManager : Command
     {
         public bbShowManager()
         {
+            // register block manager panel
+            Panels.RegisterPanel(PlugIn, typeof(UI.Views.BlockManagerPanel), "bbManager", null);
+
             // Rhino only creates one instance of each command class defined in a
             // plug-in, so it is safe to store a refence in a static property.
             Instance = this;
@@ -31,7 +35,18 @@ namespace BetterBlocks
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
+            var panelId = UI.Views.BlockManagerPanel.PanelId;
+            var visible = Panels.IsPanelVisible(panelId);
+
+            var prompt = (visible)
+                ? "Layer Panel is visible"
+                : "Layer Panel is hidden";
+
+            RhinoApp.WriteLine(prompt);
+
+            // toggle visible
+            if (!visible) Panels.OpenPanel(panelId);
+            else Panels.ClosePanel(panelId);
 
             return Result.Success;
         }
