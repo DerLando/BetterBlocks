@@ -51,8 +51,6 @@ namespace BetterBlocks.Commands
             if (!visible)
             {
                 Panels.OpenPanel(panelId);
-                var panel = Panels.GetPanel<BlockManagerPanel>(doc);
-                panel.SetBlockTreeModel(new BlockTreeModel(new BlockWatcher(doc)));
             }
             else Panels.ClosePanel(panelId);
 

@@ -58,7 +58,7 @@ namespace BetterBlocks
             if (panel.IsModelInitialized) return;
 
             // initialize new view-model
-            panel.SetBlockTreeModel(new BlockTreeModel(new BlockWatcher(e.Document)));
+            panel.SetBlockTreeModel(new SearchableBlockTreeModel(new BlockTreeModel(new BlockWatcher(e.Document))));
         }
     }
 }

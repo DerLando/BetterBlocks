@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BetterBlocks.Core;
 using Eto.Forms;
@@ -39,6 +41,17 @@ namespace BetterBlocks.UI.Models
             }
 
             return item;
+        }
+
+        // If you want to implement both "*" and "?"
+        public static String WildCardToRegular(this String value)
+        {
+            return "^" + Regex.Escape(value).Replace("\\?", ".").Replace("\\*", ".*") + "$";
+        }
+
+        public static Size ToDrawingSize(this Eto.Drawing.Size size)
+        {
+            return new Size(size.Width, size.Height);
         }
     }
 }

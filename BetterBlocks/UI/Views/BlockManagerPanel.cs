@@ -14,52 +14,105 @@ namespace BetterBlocks.UI.Views
     [Guid("961A1FA0-6719-45FC-BE00-7A48706E8C1E")]
     public class BlockManagerPanel : Panel, IPanel
     {
-        public static Guid PanelId => typeof(BlockManagerPanel).GUID;
-
+        // Fields
         private readonly uint _document_sn;
-        private BlockTreeModel _tree_model;
-        private TreeGridView _tg_View = new TreeGridView();
+        private SearchableBlockTreeModel _tree_model;
 
+        // Controls
+        private TreeGridView _tg_Blocks = new TreeGridView();
+        private SearchBox _sB_Search = new SearchBox();
+        private GroupBox _gB_Preview = new GroupBox {Text = "Preview"};
+        private ImageView _iV_Preview = new ImageView();
+        private GroupBox _gB_Description = new GroupBox {Text = "Description"};
+        private Label _lbl_Description = new Label();
+
+        // Public auto-initialized properties
+        public static Guid PanelId => typeof(BlockManagerPanel).GUID;
         public bool IsModelInitialized => !(_tree_model is null);
 
 		public BlockManagerPanel(uint documentSerialNumber)
         {
+            // sn field
             _document_sn = documentSerialNumber;
 
+            // set up event handlers
+            //_tg_Blocks.CellEdited += On_tg_Blocks_CellEdited;
+            _tg_Blocks.SelectedRowsChanged += On_tg_Blocks_SelectedRowsChanged;
+            _sB_Search.TextChanged += On_sB_Search_TextChanged;
+
+            // set up group boxes
+            _gB_Preview.Content = _iV_Preview;
+            _gB_Description.Content = _lbl_Description;
+
+            // set up columns of treegridview
             // name column
-            _tg_View.Columns.Add(new GridColumn
+            _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Name",
-                DataCell = new TextBoxCell(0)
+                DataCell = new TextBoxCell(0),
+                Editable = true
             });
 
             // Object count
-            _tg_View.Columns.Add(new GridColumn
+            _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Object Count",
                 DataCell = new TextBoxCell(1)
             });
 
-			Content = new StackLayout
-			{
-				Padding = 10,
-				Items =
-				{
-					"Hello World!",
-					// add more controls here
-                    _tg_View,
-				}
-			};
+            var layout = new DynamicLayout();
+            layout.Padding = 10;
+            layout.Spacing = new Size(5, 5);
 
-		}
+            layout.Add(_sB_Search);
+            layout.Add(_tg_Blocks);
+            layout.Add(_gB_Preview);
+            layout.Add(_gB_Description);
+
+            Content = layout;
+        }
+
+        #region Event handlers
+
+        private void On_sB_Search_TextChanged(object sender, EventArgs e)
+        {
+            _tree_model.SetSearchString(_sB_Search.Text);
+        }
+
+        private void On_tg_Blocks_SelectedRowsChanged(object sender, EventArgs e)
+        {
+            var def = ((TreeGridItem) _tg_Blocks.SelectedItem).Tag as InstanceDefinition;
+
+            // set preview item
+            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(100, 75) : _iV_Preview.Size.ToDrawingSize(); 
+            var image = def.CreatePreviewBitmap(Settings.BlockManagerPreviewProjection,
+                Settings.BlockManagerPreviewDisplayMode, size);
+            _iV_Preview.Image = image.ToEto();
+
+            // set Description
+            _lbl_Description.Text = def.Description;
+
+            // redraw
+            _iV_Preview.Invalidate();
+        }
+
+        private void On_tg_Blocks_CellEdited(object sender, GridViewCellEventArgs e)
+        {
+            var name = ((TreeGridItem) e.Item).Values[0].ToString();
+            if (string.IsNullOrEmpty(name)) return;
+            var def = ((TreeGridItem)e.Item).Tag as InstanceDefinition;
+            def.Name = name;
+        }
 
         private void On_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            _tg_View.DataStore = _tree_model;
-            _tg_View.Invalidate();
+            _tg_Blocks.DataStore = _tree_model;
+            _tg_Blocks.Invalidate();
         }
 
-        public void SetBlockTreeModel(BlockTreeModel model)
+        #endregion
+
+        public void SetBlockTreeModel(SearchableBlockTreeModel model)
         {
             if (!(_tree_model is null))
             {
@@ -74,10 +127,10 @@ namespace BetterBlocks.UI.Views
             _tree_model.CollectionChanged += On_CollectionChanged;
 
             // model is store of treegridview
-            _tg_View.DataStore = _tree_model;
+            _tg_Blocks.DataStore = _tree_model;
 
             // redraw()
-            _tg_View.Invalidate();
+            _tg_Blocks.Invalidate();
         }
 
         #region IPanel methods
