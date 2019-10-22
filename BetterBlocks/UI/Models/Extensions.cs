@@ -18,6 +18,7 @@ namespace BetterBlocks.UI.Models
             return new[]
             {
                 definition.Name,
+                definition.IsRoot().ToString(),
                 definition.ObjectCount.ToString(),
             };
         }

@@ -50,21 +50,31 @@ namespace BetterBlocks.UI.Views
             _gB_Preview.Add(_iV_Preview);
             _gB_Description.Add(_lbl_Description);
 
+            #region TreeGrid columns
+
             // set up columns of treegridview
             // name column
             _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Name",
                 DataCell = new TextBoxCell(0),
-                Editable = true
+            });
+
+            // root
+            _tg_Blocks.Columns.Add(new GridColumn
+            {
+                HeaderText = "Root",
+                DataCell = new TextBoxCell(1),
             });
 
             // Object count
             _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Object Count",
-                DataCell = new TextBoxCell(1)
+                DataCell = new TextBoxCell(2)
             });
+
+            #endregion
 
             var layout = new DynamicLayout();
             layout.Padding = 10;
