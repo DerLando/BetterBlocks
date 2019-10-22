@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,11 @@ namespace BetterBlocks.UI.EtoCommands
         {
             base.OnExecuted(e);
 
+            // if we don't have a definition yet, there is nothing to do
             if (_definition is null) return;
 
-            foreach (var instanceObject in _definition.GetReferences(0))
-            {
-                instanceObject.Select(true, true);
-            }
-
-            RhinoDoc.ActiveDoc.Views.Redraw();
+            Commands.Hidden.bbHiddenSelectBlockInstancesByParent.Instance.SetDefinition(_definition);
+            RhinoApp.RunScript("bbHiddenSelectBlockInstancesByParent", false);
         }
     }
 }
