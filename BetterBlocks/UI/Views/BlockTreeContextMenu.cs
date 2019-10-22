@@ -10,14 +10,41 @@ namespace BetterBlocks.UI.Views
 	public class BlockTreeContextMenu : ContextMenu
     {
 
-		public BlockTreeContextMenu()
+        private readonly TreeGridView _tv_parent;
+        private readonly SelectBlockInstancesByParent _selectCommand = new SelectBlockInstancesByParent();
+        private readonly RenameBlockDefinitionCommand _renameCommand = new RenameBlockDefinitionCommand();
+
+		public BlockTreeContextMenu(TreeGridView parent)
         {
-            var definition = (InstanceDefinition)((TreeGridItem) ((TreeGridView) FindParent(typeof(TreeGridView))).SelectedItem).Tag;
+            _tv_parent = parent;
 
-            Command select = new SelectBlockInstancesByParent(definition);
+            _tv_parent.SelectedItemChanged += On_tv_parent_SelectedItemChanged;
 
-            Items.Add(select.CreateMenuItem());
+            InitializeCommands();
+
+            Items.Add(_renameCommand.CreateMenuItem());
+            Items.Add(_selectCommand.CreateMenuItem());
 
         }
-	}
+
+        private void On_tv_parent_SelectedItemChanged(object sender, EventArgs e)
+        {
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            var definition = TryGetParentSelectedInstanceDefinition();
+
+            _renameCommand.SetDefinition(definition);
+            _selectCommand.SetDefinition(definition);
+        }
+
+        private InstanceDefinition TryGetParentSelectedInstanceDefinition()
+        {
+            if (_tv_parent.SelectedItem is null) return null;
+            return (InstanceDefinition) ((TreeGridItem) _tv_parent.SelectedItem).Tag;
+        }
+
+    }
 }

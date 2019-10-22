@@ -61,12 +61,15 @@
     <Compile Include="Core\NestedBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UI\EtoCommands\InstanceDefinitionCommandBase.cs" />
+    <Compile Include="UI\EtoCommands\RenameBlockDefinitionCommand.cs" />
     <Compile Include="UI\EtoCommands\SelectBlockInstancesByParent.cs" />
     <Compile Include="UI\Models\BlockTreeModel.cs" />
     <Compile Include="UI\Models\Extensions.cs" />
     <Compile Include="UI\Models\SearchableBlockTreeModel.cs" />
     <Compile Include="UI\Views\BlockManagerPanel.cs" />
     <Compile Include="UI\Views\BlockTreeContextMenu.cs" />
+    <Compile Include="UI\Views\RenameBlockDefinitionDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />

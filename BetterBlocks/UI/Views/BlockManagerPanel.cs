@@ -18,7 +18,7 @@ namespace BetterBlocks.UI.Views
         private SearchableBlockTreeModel _tree_model;
 
         // Controls
-        private TreeGridView _tg_Blocks = new TreeGridView { ContextMenu = new BlockTreeContextMenu() };
+        private TreeGridView _tg_Blocks = new TreeGridView();
 
         private DynamicGroup _gB_Filter = new DynamicGroup { Title = "Filter" };
         private SearchBox _sB_Search = new SearchBox();
@@ -41,6 +41,9 @@ namespace BetterBlocks.UI.Views
             //_tg_Blocks.CellEdited += On_tg_Blocks_CellEdited;
             _tg_Blocks.SelectedRowsChanged += On_tg_Blocks_SelectedRowsChanged;
             _sB_Search.TextChanged += On_sB_Search_TextChanged;
+
+            // Set up context menu
+            _tg_Blocks.ContextMenu = new BlockTreeContextMenu(_tg_Blocks);
 
             // set up group boxes
             _gB_Filter.Add(_sB_Search);
