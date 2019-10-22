@@ -24,5 +24,22 @@ namespace BetterBlocks.Core
         {
             return definition.InUse(0) | definition.InUse(1) | definition.InUse(2);
         }
+
+        public static IEnumerable<InstanceObject> GetPartInstances(this InstanceDefinition definition)
+        {
+            return (from obj in definition.GetObjects()
+                where obj.ObjectType == ObjectType.InstanceReference
+                select (InstanceObject)obj);
+        }
+
+        public static IEnumerable<InstanceDefinition> GetPartDefinitions(this InstanceDefinition definition)
+        {
+            return from obj in definition.GetPartInstances() select obj.InstanceDefinition;
+        }
+
+        public static int PartCount(this InstanceDefinition definition)
+        {
+            return definition.GetPartInstances().Count();
+        }
     }
 }

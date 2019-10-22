@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace BetterBlocks.UI.Views
 {
-    [Guid("961A1FA0-6719-45FC-BE00-7A48706E8C1E")]
+    [Guid("66F8C34D-BAF6-4029-96FF-3F74F892454C")]
     public class BlockManagerPanel : Panel, IPanel
     {
         // Fields
@@ -99,8 +99,8 @@ namespace BetterBlocks.UI.Views
             // Object count
             _tg_Blocks.Columns.Add(new GridColumn
             {
-                HeaderText = "Object Count",
-                DataCell = new TextBoxCell(Extensions._object_count_index)
+                HeaderText = "Parts Count",
+                DataCell = new TextBoxCell(Extensions._part_count_index)
             });
 
             #endregion

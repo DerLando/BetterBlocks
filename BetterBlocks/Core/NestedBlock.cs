@@ -28,13 +28,13 @@ namespace BetterBlocks.Core
             Definition = def;
 
             // iterate over all definitions in the given rhinodoc
-            foreach (var instanceDefinition in doc.InstanceDefinitions)
+            foreach (var instanceDefinition in def.GetPartDefinitions())
             {
                 // skip yourself, or face an overflow :/
-                if(instanceDefinition.Equals(Definition)) continue;;
+                //if (instanceDefinition.Equals(Definition)) continue; ;
 
                 // result of 1 means nested one level inside of the head definition
-                if (Definition.UsesDefinition(instanceDefinition.Index) == 1)
+                if (true)//Definition.UsesDefinition(instanceDefinition.Index) == 1)
                 {
                     // recursion (•_•) ( •_•)>⌐■-■ (⌐■_■)
                     Add(new NestedBlock(doc, instanceDefinition));

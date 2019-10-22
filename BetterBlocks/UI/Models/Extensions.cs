@@ -16,7 +16,7 @@ namespace BetterBlocks.UI.Models
         public static int _name_index = 0;
         public static int _is_root_index = 1;
         public static int _is_in_use_index = 2;
-        public static int _object_count_index = 3;
+        public static int _part_count_index = 3;
 
         #region Value conversions
 
@@ -34,7 +34,7 @@ namespace BetterBlocks.UI.Models
             values[_name_index] = definition.Name;
             values[_is_root_index] = definition.IsRoot().ToString();
             values[_is_in_use_index] = definition.IsInUse().ToString();
-            values[_object_count_index] = definition.ObjectCount.ToString();
+            values[_part_count_index] = definition.PartCount().ToString();
             return values;
         }
 
