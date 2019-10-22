@@ -17,7 +17,12 @@ namespace BetterBlocks.Core
         /// <returns>A boolean telling if the given definition is root or not</returns>
         public static bool IsRoot(this InstanceDefinition definition)
         {
-            return definition.GetObjects().All(o => o.ObjectType != ObjectType.InstanceReference);
+            return !definition.GetObjects().Any(o => o.ObjectType == ObjectType.InstanceReference);
+        }
+
+        public static bool IsInUse(this InstanceDefinition definition)
+        {
+            return definition.InUse(0) | definition.InUse(1) | definition.InUse(2);
         }
     }
 }

@@ -20,12 +20,20 @@ namespace BetterBlocks.UI.Views
         // Controls
         private TreeGridView _tg_Blocks = new TreeGridView();
 
-        private DynamicGroup _gB_Filter = new DynamicGroup { Title = "Filter" };
+        private DynamicGroup _gB_Search = new DynamicGroup { Title = "Search" };
         private SearchBox _sB_Search = new SearchBox();
         private DynamicGroup _gB_Preview = new DynamicGroup { Title = "Preview" };
         private ImageView _iV_Preview = new ImageView();
         private DynamicGroup _gB_Description = new DynamicGroup { Title = "Description" };
         private Label _lbl_Description = new Label();
+        private GroupBox _gB_UsageFilters = new GroupBox{Text = "Filters"};
+        private CheckBox _cB_Root = new CheckBox{Checked = true};
+        private Label _lbl_Root = new Label{Text = "Root", VerticalAlignment = VerticalAlignment.Center};
+        private CheckBox _cB_Assembly = new CheckBox{Checked = true};
+        private Label _lbl_Assembly = new Label{Text = "Assembly", VerticalAlignment = VerticalAlignment.Center };
+        private CheckBox _cB_InUse = new CheckBox{Checked = true};
+        private Label _lbl_InUse = new Label {Text = "In use", VerticalAlignment = VerticalAlignment.Center };
+
 
         // Public auto-initialized properties
         public static Guid PanelId => typeof(BlockManagerPanel).GUID;
@@ -41,14 +49,28 @@ namespace BetterBlocks.UI.Views
             //_tg_Blocks.CellEdited += On_tg_Blocks_CellEdited;
             _tg_Blocks.SelectedRowsChanged += On_tg_Blocks_SelectedRowsChanged;
             _sB_Search.TextChanged += On_sB_Search_TextChanged;
+            _cB_Root.CheckedChanged += On_cB_Root_CheckedChanged;
+            _cB_Assembly.CheckedChanged += On_cB_Assembly_CheckedChanged;
+            _cB_InUse.CheckedChanged += On_cB_InUse_CheckedChanged;
 
             // Set up context menu
             _tg_Blocks.ContextMenu = new BlockTreeContextMenu(_tg_Blocks);
 
             // set up group boxes
-            _gB_Filter.Add(_sB_Search);
+            _gB_Search.Add(_sB_Search);
             _gB_Preview.Add(_iV_Preview);
             _gB_Description.Add(_lbl_Description);
+            _gB_UsageFilters.Padding = new Padding(5);
+
+            var filterLayout = new DynamicLayout();
+            filterLayout.Padding = new Padding(5);
+            filterLayout.Spacing = new Size(5, 5);
+
+            filterLayout.AddRow(new Control[] {_lbl_Root, _cB_Root});
+            filterLayout.AddRow(new Control[] {_lbl_Assembly, _cB_Assembly});
+            filterLayout.AddRow(new Control[]{_lbl_InUse, _cB_InUse});
+
+            _gB_UsageFilters.Content = filterLayout;
 
             #region TreeGrid columns
 
@@ -57,21 +79,28 @@ namespace BetterBlocks.UI.Views
             _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Name",
-                DataCell = new TextBoxCell(0),
+                DataCell = new TextBoxCell(Extensions._name_index),
             });
 
             // root
             _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Root",
-                DataCell = new TextBoxCell(1),
+                DataCell = new TextBoxCell(Extensions._is_root_index),
+            });
+
+            // In use
+            _tg_Blocks.Columns.Add(new GridColumn
+            {
+                HeaderText = "In use",
+                DataCell = new TextBoxCell(Extensions._is_in_use_index)
             });
 
             // Object count
             _tg_Blocks.Columns.Add(new GridColumn
             {
                 HeaderText = "Object Count",
-                DataCell = new TextBoxCell(2)
+                DataCell = new TextBoxCell(Extensions._object_count_index)
             });
 
             #endregion
@@ -80,7 +109,8 @@ namespace BetterBlocks.UI.Views
             layout.Padding = 10;
             layout.Spacing = new Size(5, 5);
 
-            layout.Add(_gB_Filter.Create(layout));
+            layout.Add(_gB_Search.Create(layout));
+            layout.Add(_gB_UsageFilters);
             layout.Add(_tg_Blocks);
             layout.Add(_gB_Preview.Create(layout));
             layout.Add(_gB_Description.Create(layout));
@@ -90,6 +120,21 @@ namespace BetterBlocks.UI.Views
         }
 
         #region Event handlers
+
+        private void On_cB_InUse_CheckedChanged(object sender, EventArgs e)
+        {
+            _tree_model.SetInUseFilter(_cB_InUse.Checked.Value);
+        }
+
+        private void On_cB_Assembly_CheckedChanged(object sender, EventArgs e)
+        {
+            _tree_model.SetAssemblyFilter(_cB_Assembly.Checked.Value);
+        }
+
+        private void On_cB_Root_CheckedChanged(object sender, EventArgs e)
+        {
+            _tree_model.SetRootFilter(_cB_Root.Checked.Value);
+        }
 
         private void On_sB_Search_TextChanged(object sender, EventArgs e)
         {
