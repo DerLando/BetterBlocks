@@ -23,9 +23,9 @@ namespace BetterBlocks.UI.EtoCommands
             base.OnExecuted(e);
 
             // if we don't have a definition yet, there is nothing to do
-            if (_definition is null) return;
+            if (_definitions is null) return;
 
-            Commands.Hidden.bbHiddenSelectBlockInstancesByParent.Instance.SetDefinition(_definition);
+            Commands.Hidden.bbHiddenSelectBlockInstancesByParent.Instance.SetDefinition(_definitions);
             RhinoApp.RunScript("bbHiddenSelectBlockInstancesByParent", false);
         }
     }

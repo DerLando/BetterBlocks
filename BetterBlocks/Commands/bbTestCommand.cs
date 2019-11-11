@@ -26,10 +26,32 @@ namespace BetterBlocks.Commands
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            var preview = new BlockPreview(doc.InstanceDefinitions[0]);
+            //var preview = new BlockPreview(doc.InstanceDefinitions[0]);
 
-            var image = preview.Preview;
+            //var image = preview.Preview;
 
+            int layerIndex = -1;
+            bool _ = false;
+            if (!Rhino.UI.Dialogs.ShowSelectLayerDialog(ref layerIndex, "Layer to change to", true, true, ref _))
+            {
+                RhinoApp.WriteLine($"No valid Layer selected!");
+                return Result.Failure;
+            }
+
+            var layer = doc.Layers[layerIndex];
+            if (layer is null)
+            {
+                RhinoApp.WriteLine($"No valid Layer selected!");
+                return Result.Failure;
+            }
+
+            foreach (var docInstanceDefinition in doc.InstanceDefinitions)
+            {
+                if (Actions.ChangeInstanceDefinitionGeometryLayer(docInstanceDefinition, doc, layer))
+                {
+                    RhinoApp.WriteLine($"Changed geometry of {docInstanceDefinition} to layer {layer}!");
+                }
+            }
             return Result.Success;
         }
     }

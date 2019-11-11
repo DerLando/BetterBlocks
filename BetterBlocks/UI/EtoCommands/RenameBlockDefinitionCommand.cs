@@ -29,13 +29,39 @@ namespace BetterBlocks.UI.EtoCommands
             if (renameDialog.ShowModal() == DialogResult.Ok)
             {
                 var doc = RhinoDoc.ActiveDoc;
-                if (!Actions.RenameInstanceDefinition(_definition, doc, renameDialog.StringResult))
+                bool modified = false;
+
+                if (_definitions.Length == 0)
                 {
-                    RhinoApp.WriteLine($"Could not rename {_definition.Name} to {renameDialog.StringResult}!");
-                    return;
+                    if (!Actions.RenameInstanceDefinition(_definitions[0], doc, renameDialog.StringResult))
+                    {
+                        RhinoApp.WriteLine($"Could not rename {_definitions[0].Name} to {renameDialog.StringResult}!");
+                        return;
+                    }
+
+                    modified = true;
+                }
+                else
+                {
+                    for (int i = 0; i < _definitions.Length; i++)
+                    {
+                        var newName =
+                            $"{renameDialog.StringResult}{Settings.CountDelimiter}{i.ToString().PadLeft(Settings.PadCount, '0')}";
+                        if (!Actions.RenameInstanceDefinition(_definitions[i], doc, newName))
+                        {
+                            RhinoApp.WriteLine($"Could not rename {_definitions[i].Name} to {renameDialog.StringResult}!");
+                        }
+                        else
+                        {
+                            modified = true;
+                        }
+                    }
+                    foreach (var definition in _definitions)
+                    {
+                    }
                 }
 
-                doc.Modified = true;
+                if (modified) doc.Modified = true;
             }
         }
     }

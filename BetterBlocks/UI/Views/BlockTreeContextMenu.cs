@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using BetterBlocks.UI.EtoCommands;
 using Eto.Forms;
@@ -23,7 +24,7 @@ namespace BetterBlocks.UI.Views
         {
             _tv_parent = parent;
 
-            _tv_parent.SelectedItemChanged += On_tv_parent_SelectedItemChanged;
+            _tv_parent.SelectedRowsChanged += On_tv_parent_SelectedItemChanged;
 
             InitializeCommands();
 
@@ -40,17 +41,27 @@ namespace BetterBlocks.UI.Views
 
         private void InitializeCommands()
         {
-            var definition = TryGetParentSelectedInstanceDefinition();
+            var definitions = TryGetParentSelectedInstanceDefinitions();
 
-            _renameCommand.SetDefinition(definition);
-            _selectCommand.SetDefinition(definition);
-            _changeLayerCommand.SetDefinition(definition);
+            _renameCommand.SetDefinition(definitions);
+            _selectCommand.SetDefinition(definitions);
+            _changeLayerCommand.SetDefinition(definitions);
         }
 
-        private InstanceDefinition TryGetParentSelectedInstanceDefinition()
+        private InstanceDefinition[] TryGetParentSelectedInstanceDefinitions()
         {
             if (_tv_parent.SelectedItem is null) return null;
-            return (InstanceDefinition) ((TreeGridItem) _tv_parent.SelectedItem).Tag;
+            int selCount = _tv_parent.SelectedItems.Count();
+            InstanceDefinition[] definitions = new InstanceDefinition[selCount];
+
+            var selected = _tv_parent.SelectedItems.ToArray();
+
+            for (int i = 0; i < selCount; i++)
+            {
+                definitions[i] = (InstanceDefinition) ((TreeGridItem) selected[i]).Tag;
+            }
+
+            return definitions;
         }
 
     }

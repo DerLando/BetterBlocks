@@ -59,6 +59,7 @@ namespace BetterBlocks.UI.Views
             // Set up tg constraints
             _tg_Blocks.Border = BorderType.Line;
             _tg_Blocks.Height = 500;
+            _tg_Blocks.AllowMultipleSelection = true;
 
             // set up group boxes
             _gB_Search.Add(_sB_Search);

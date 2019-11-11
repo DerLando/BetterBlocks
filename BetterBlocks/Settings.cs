@@ -12,5 +12,7 @@ namespace BetterBlocks
     {
         public static DefinedViewportProjection BlockManagerPreviewProjection = DefinedViewportProjection.Perspective;
         public static DisplayMode BlockManagerPreviewDisplayMode = DisplayMode.Shaded;
+        public static string CountDelimiter = "_";
+        public static int PadCount = 3;
     }
 }
