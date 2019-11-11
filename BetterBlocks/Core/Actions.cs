@@ -129,12 +129,11 @@ namespace BetterBlocks.Core
             return doc.InstanceDefinitions.Delete(definition);
         }
 
-        public static bool CountInstanceDefinition(InstanceDefinition definition, out int topLevel, out int nested)
+        public static bool CountInstanceDefinitions(IEnumerable<InstanceDefinition> definitions, out IEnumerable<BlockCount> counts)
         {
-            nested = definition.GetReferences(2).Length;
-            topLevel = definition.GetReferences(0).Length;
-
+            counts = from definition in definitions select new BlockCount(definition);
             return true;
         }
+
     }
 }

@@ -41,5 +41,21 @@ namespace BetterBlocks.Core
         {
             return definition.GetPartInstances().Count();
         }
+
+        public static int GetNestedCount(this InstanceDefinition definition)
+        {
+            var containers = definition.GetContainers();
+            int count = 0;
+
+            foreach (var container in containers)
+            {
+                foreach (var instance in container.GetPartInstances())
+                {
+                    if (instance.InstanceDefinition.Equals(definition)) count += 1;
+                }
+            }
+
+            return count;
+        }
     }
 }
