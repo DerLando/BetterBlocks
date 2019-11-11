@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ namespace BetterBlocks.UI.Models
 {
     public class SearchableBlockTreeModel : TreeGridItemCollection
     {
-        private readonly TreeGridItemCollection _original_collection;
+        private readonly BlockTreeModel _original_collection;
 
         private string _search_string = "";
 
@@ -18,10 +19,19 @@ namespace BetterBlocks.UI.Models
         private bool _filter_assembly = true;
         private bool _filter_in_use = true;
 
-        public SearchableBlockTreeModel(TreeGridItemCollection originalCollection)
+        public SearchableBlockTreeModel(BlockTreeModel originalCollection)
         {
             _original_collection = originalCollection;
             AddRange(_original_collection);
+
+            _original_collection.CollectionChanged += On_OriginalCollectionChanged;
+        }
+
+        private void On_OriginalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Clear();
+            AddRange(_original_collection);
+            Filter();
         }
 
         public void SetSearchString(string s)

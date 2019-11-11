@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BetterBlocks.Core;
 using BetterBlocks.UI.Views;
 using Eto.Drawing;
 using Eto.Forms;
@@ -29,11 +30,14 @@ namespace BetterBlocks.UI.EtoCommands
 
             if (renameDialog.ShowModal() == DialogResult.Ok)
             {
-                if (!Rhino.RhinoDoc.ActiveDoc.InstanceDefinitions.Modify(_definition, renameDialog.NewName,
-                    _definition.Description, false))
+                var doc = RhinoDoc.ActiveDoc;
+                if (!Actions.RenameInstanceDefinition(_definition, doc, renameDialog.NewName))
                 {
                     RhinoApp.WriteLine($"Could not rename {_definition.Name} to {renameDialog.NewName}!");
+                    return;
                 }
+
+                doc.Modified = true;
             }
         }
     }
