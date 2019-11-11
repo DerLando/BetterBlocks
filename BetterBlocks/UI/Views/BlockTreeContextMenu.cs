@@ -21,6 +21,7 @@ namespace BetterBlocks.UI.Views
         private readonly ChangeBlockDefinitionGeometryLayer _changeLayerCommand = new ChangeBlockDefinitionGeometryLayer();
         private readonly DeleteInstanceDefinition _deleteCommand = new DeleteInstanceDefinition();
         private readonly CountBlockInstances _countCommand = new CountBlockInstances();
+        private readonly UsedByBlockDefinitions _usedByCommand = new UsedByBlockDefinitions();
 
 		public BlockTreeContextMenu(TreeGridView parent)
         {
@@ -40,8 +41,9 @@ namespace BetterBlocks.UI.Views
             Items.Add(_changeLayerCommand.CreateMenuItem());
             Items.Add(new SeparatorMenuItem());
 
-            // Analize Blocks
+            // Analyze Blocks
             Items.Add(_countCommand.CreateMenuItem());
+            Items.Add(_usedByCommand.CreateMenuItem());
         }
 
         private void On_tv_parent_SelectedItemChanged(object sender, EventArgs e)
@@ -58,6 +60,7 @@ namespace BetterBlocks.UI.Views
             _changeLayerCommand.SetDefinition(definitions);
             _deleteCommand.SetDefinition(definitions);
             _countCommand.SetDefinition(definitions);
+            _usedByCommand.SetDefinition(definitions);
         }
 
         private InstanceDefinition[] TryGetParentSelectedInstanceDefinitions()

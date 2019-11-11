@@ -10,15 +10,6 @@ namespace BetterBlocks.Core
     public class BlockUsedBy
     {
         public string Name { get; set; }
-        public string[] UsedBy { get; set; }
-
-        public BlockUsedBy(InstanceDefinition definition)
-        {
-            Name = definition.Name;
-
-            var containers = definition.GetContainers();
-            UsedBy = (from container in containers select container.Name).ToArray();
-
-        }
+        public string UsedBy { get; set; }
     }
 }
