@@ -71,6 +71,7 @@
     <Compile Include="UI\EtoCommands\RenameBlockDefinitionCommand.cs" />
     <Compile Include="UI\EtoCommands\SelectBlockInstancesByParent.cs" />
     <Compile Include="UI\Models\BlockTreeModel.cs" />
+    <Compile Include="UI\Models\BlockTreeModelSortType.cs" />
     <Compile Include="UI\Models\Extensions.cs" />
     <Compile Include="UI\Models\SearchableBlockTreeModel.cs" />
     <Compile Include="UI\Views\BlockManagerPanel.cs" />

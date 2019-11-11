@@ -30,28 +30,6 @@ namespace BetterBlocks.Commands
 
             //var image = preview.Preview;
 
-            int layerIndex = -1;
-            bool _ = false;
-            if (!Rhino.UI.Dialogs.ShowSelectLayerDialog(ref layerIndex, "Layer to change to", true, true, ref _))
-            {
-                RhinoApp.WriteLine($"No valid Layer selected!");
-                return Result.Failure;
-            }
-
-            var layer = doc.Layers[layerIndex];
-            if (layer is null)
-            {
-                RhinoApp.WriteLine($"No valid Layer selected!");
-                return Result.Failure;
-            }
-
-            foreach (var docInstanceDefinition in doc.InstanceDefinitions)
-            {
-                if (Actions.ChangeInstanceDefinitionGeometryLayer(docInstanceDefinition, doc, layer))
-                {
-                    RhinoApp.WriteLine($"Changed geometry of {docInstanceDefinition} to layer {layer}!");
-                }
-            }
             return Result.Success;
         }
     }

@@ -40,22 +40,10 @@ namespace BetterBlocks.UI.EtoCommands
                 return;
             }
 
-            var modified = false;
-            foreach (var definition in _definitions)
-            {
-                if (!Actions.ChangeInstanceDefinitionGeometryLayer(definition, doc, layer))
-                {
-                    RhinoApp.WriteLine($"Could not change geometry layer for {definition}");
-                }
-                else
-                {
-                    RhinoApp.WriteLine($"Changed all geometry of {definition} to layer {layer}");
-                    modified = true;
-                }
-            }
+            Actions.ChangeInstanceDefinitionsGeometryLayer(_definitions, doc, layer);
 
-            if(modified) doc.Modified = true;
-            
+            doc.Modified = true;
+
         }
     }
 }

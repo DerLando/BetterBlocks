@@ -22,21 +22,9 @@ namespace BetterBlocks.UI.EtoCommands
 
             var doc = RhinoDoc.ActiveDoc;
 
-            var modified = false;
-            foreach (var definition in _definitions)
-            {
-                if (!Actions.DeleteInstanceDefinition(definition, doc))
-                {
-                    RhinoApp.WriteLine($"Could not delete {definition}");
-                }
-                else
-                {
-                    RhinoApp.WriteLine($"Deleted {definition}!");
-                    modified = true;
-                }
-            }
+            Actions.DeleteInstanceDefinitions(_definitions, doc);
 
-            if (modified) doc.Modified = true;
+            doc.Modified = true;
 
         }
     }

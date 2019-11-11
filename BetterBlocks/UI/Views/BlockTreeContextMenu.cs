@@ -29,11 +29,15 @@ namespace BetterBlocks.UI.Views
 
             InitializeCommands();
 
-            Items.Add(_renameCommand.CreateMenuItem());
+            // Selection
             Items.Add(_selectCommand.CreateMenuItem());
-            Items.Add(_changeLayerCommand.CreateMenuItem());
-            Items.Add(_deleteCommand.CreateMenuItem());
+            Items.Add(new SeparatorMenuItem());
 
+            // Modify Blocks
+            Items.Add(_renameCommand.CreateMenuItem());
+            Items.Add(_deleteCommand.CreateMenuItem());
+            Items.Add(_changeLayerCommand.CreateMenuItem());
+            Items.Add(new SeparatorMenuItem());
         }
 
         private void On_tv_parent_SelectedItemChanged(object sender, EventArgs e)

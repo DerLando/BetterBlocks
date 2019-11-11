@@ -48,6 +48,7 @@ namespace BetterBlocks.UI.Views
             // set up event handlers
             //_tg_Blocks.CellEdited += On_tg_Blocks_CellEdited;
             _tg_Blocks.SelectedRowsChanged += On_tg_Blocks_SelectedRowsChanged;
+            _tg_Blocks.ColumnHeaderClick += On_tg_Blocks_ColumnHeaderClick;
             _sB_Search.TextChanged += On_sB_Search_TextChanged;
             _cB_Root.CheckedChanged += On_cB_Root_CheckedChanged;
             _cB_Assembly.CheckedChanged += On_cB_Assembly_CheckedChanged;
@@ -60,6 +61,8 @@ namespace BetterBlocks.UI.Views
             _tg_Blocks.Border = BorderType.Line;
             _tg_Blocks.Height = 500;
             _tg_Blocks.AllowMultipleSelection = true;
+            _tg_Blocks.AllowColumnReordering = false;
+            _tg_Blocks.ShowHeader = true;
 
             // set up group boxes
             _gB_Search.Add(_sB_Search);
@@ -122,6 +125,20 @@ namespace BetterBlocks.UI.Views
             layout.Add(null);
 
             Content = layout;
+        }
+
+        private void On_tg_Blocks_ColumnHeaderClick(object sender, GridColumnEventArgs e)
+        {
+            int sortItem = _tg_Blocks.Columns.IndexOf(e.Column);
+            switch (sortItem)
+            {
+                case 0:
+                    _tree_model.SetSortType(BlockTreeModelSortType.Name);
+                    _tree_model.SortRows();
+                    break;
+                default:
+                    break;
+            }
         }
 
         #region Event handlers

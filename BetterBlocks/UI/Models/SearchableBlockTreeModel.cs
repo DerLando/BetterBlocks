@@ -18,6 +18,7 @@ namespace BetterBlocks.UI.Models
         private bool _filter_root = true;
         private bool _filter_assembly = true;
         private bool _filter_in_use = true;
+        private BlockTreeModelSortType _sort_type = BlockTreeModelSortType.Name;
 
         public SearchableBlockTreeModel(BlockTreeModel originalCollection)
         {
@@ -58,6 +59,38 @@ namespace BetterBlocks.UI.Models
             Filter();
         }
 
+        public void SetSortType(BlockTreeModelSortType sortType)
+        {
+            _sort_type = sortType;
+        }
+
+        public void SortRows()
+        {
+            IOrderedEnumerable<ITreeGridItem> sorted = null;
+            switch (_sort_type)
+            {
+                case BlockTreeModelSortType.Name:
+                    sorted = Items.OrderBy(i => ((TreeGridItem) i).Values[Extensions._name_index].ToString().ToLower());
+                    Clear();
+                    AddRange(sorted);
+                    break;
+                case BlockTreeModelSortType.Root:
+                    sorted = Items.OrderBy(i => ((TreeGridItem)i).Values[Extensions._is_root_index].ToString().ToLower());
+                    Clear();
+                    AddRange(sorted);
+                    break;
+                case BlockTreeModelSortType.Assembly:
+                    break;
+                case BlockTreeModelSortType.PartCount:
+                    sorted = Items.OrderBy(i => ((TreeGridItem)i).Values[Extensions._part_count_index].ToString().ToLower());
+                    Clear();
+                    AddRange(sorted);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         private void Filter()
         {
             Clear();
@@ -69,7 +102,7 @@ namespace BetterBlocks.UI.Models
             else
             {
                 var filtered = from item in _original_collection
-                    where Regex.IsMatch(((TreeGridItem) item).Values[0].ToString(), _search_string)
+                    where Regex.IsMatch(((TreeGridItem) item).Values[0].ToString().ToLower(), _search_string.ToLower())
                     select item;
                 List<TreeGridItem> items = new List<TreeGridItem>();
 
