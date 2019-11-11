@@ -8,6 +8,7 @@ using BetterBlocks.UI.Views;
 using Eto.Drawing;
 using Eto.Forms;
 using Rhino;
+using Rhino.Input.Custom;
 
 namespace BetterBlocks.UI.EtoCommands
 {
@@ -23,17 +24,14 @@ namespace BetterBlocks.UI.EtoCommands
         {
             base.OnExecuted(e);
 
-            var renameDialog = new RenameBlockDefinitionDialog
-            {
-                Location = new Point(Mouse.Position)
-            };
+            var renameDialog = new GetStringDialog("Rename Block");
 
             if (renameDialog.ShowModal() == DialogResult.Ok)
             {
                 var doc = RhinoDoc.ActiveDoc;
-                if (!Actions.RenameInstanceDefinition(_definition, doc, renameDialog.NewName))
+                if (!Actions.RenameInstanceDefinition(_definition, doc, renameDialog.StringResult))
                 {
-                    RhinoApp.WriteLine($"Could not rename {_definition.Name} to {renameDialog.NewName}!");
+                    RhinoApp.WriteLine($"Could not rename {_definition.Name} to {renameDialog.StringResult}!");
                     return;
                 }
 

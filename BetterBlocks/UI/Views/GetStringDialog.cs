@@ -8,21 +8,22 @@ using Eto.Forms;
 
 namespace BetterBlocks.UI.Views
 {
-    class RenameBlockDefinitionDialog : Dialog<DialogResult>
+    public class GetStringDialog : Dialog<DialogResult>
     {
-        public string NewName = "";
+        public string StringResult { get; private set; }
 
-        private Button btn_OK = new Button{Text = "OK"};
-        private Button btn_Cancel = new Button{Text = "Cancel"};
-        private TextBox tB_NewName = new TextBox();
+        private Button btn_OK = new Button { Text = "OK" };
+        private Button btn_Cancel = new Button { Text = "Cancel" };
+        private TextBox tB_StringResult = new TextBox();
 
-        public RenameBlockDefinitionDialog()
+        public GetStringDialog(string title)
         {
             // initialize general properties
             Padding = new Padding(5);
             Resizable = false;
             Result = DialogResult.Cancel;
-            Title = "Rename Block definition";
+            Title = title;
+            Location = new Point(Mouse.Position);
             WindowStyle = WindowStyle.Default;
 
             // initialize event handlers
@@ -32,8 +33,8 @@ namespace BetterBlocks.UI.Views
 
             // initialize layout
             var layout = new DynamicLayout();
-            layout.Add(tB_NewName);
-            layout.AddSeparateRow(new[] {btn_OK, btn_Cancel});
+            layout.Add(tB_StringResult);
+            layout.AddSeparateRow(new[] { btn_OK, btn_Cancel });
             layout.Add(null);
 
             // Set content, set up Enter KeyDown
@@ -43,7 +44,7 @@ namespace BetterBlocks.UI.Views
 
         private void On_Content_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Keys.Enter) On_btn_OK_Click(sender, new EventArgs());
+            if (e.Key == Keys.Enter) On_btn_OK_Click(sender, new EventArgs());
         }
 
         private void On_btn_Cancel_Click(object sender, EventArgs e)
@@ -53,9 +54,9 @@ namespace BetterBlocks.UI.Views
 
         private void On_btn_OK_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tB_NewName.Text)) Close();
+            if (string.IsNullOrEmpty(tB_StringResult.Text)) Close();
 
-            NewName = tB_NewName.Text;
+            StringResult = tB_StringResult.Text;
             Result = DialogResult.Ok;
             Close();
         }

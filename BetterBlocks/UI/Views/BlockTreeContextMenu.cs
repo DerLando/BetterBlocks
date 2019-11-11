@@ -17,6 +17,7 @@ namespace BetterBlocks.UI.Views
         private readonly TreeGridView _tv_parent;
         private readonly SelectBlockInstancesByParent _selectCommand = new SelectBlockInstancesByParent();
         private readonly RenameBlockDefinitionCommand _renameCommand = new RenameBlockDefinitionCommand();
+        private readonly ChangeBlockDefinitionGeometryLayer _changeLayerCommand = new ChangeBlockDefinitionGeometryLayer();
 
 		public BlockTreeContextMenu(TreeGridView parent)
         {
@@ -28,6 +29,7 @@ namespace BetterBlocks.UI.Views
 
             Items.Add(_renameCommand.CreateMenuItem());
             Items.Add(_selectCommand.CreateMenuItem());
+            Items.Add(_changeLayerCommand.CreateMenuItem());
 
         }
 
@@ -42,6 +44,7 @@ namespace BetterBlocks.UI.Views
 
             _renameCommand.SetDefinition(definition);
             _selectCommand.SetDefinition(definition);
+            _changeLayerCommand.SetDefinition(definition);
         }
 
         private InstanceDefinition TryGetParentSelectedInstanceDefinition()

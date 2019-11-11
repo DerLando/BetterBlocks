@@ -56,6 +56,10 @@ namespace BetterBlocks.UI.Views
             // Set up context menu
             _tg_Blocks.ContextMenu = new BlockTreeContextMenu(_tg_Blocks);
 
+            // Set up tg constraints
+            _tg_Blocks.Border = BorderType.Line;
+            _tg_Blocks.Height = 500;
+
             // set up group boxes
             _gB_Search.Add(_sB_Search);
             _gB_Preview.Add(_iV_Preview);
