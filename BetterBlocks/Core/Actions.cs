@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Rhino;
+using Rhino.Commands;
 using Rhino.DocObjects;
 using Rhino.Geometry;
 
@@ -13,7 +14,10 @@ namespace BetterBlocks.Core
     {
         public static bool RenameInstanceDefinition(InstanceDefinition definition, RhinoDoc doc, string newName)
         {
-            return doc.InstanceDefinitions.Modify(definition, newName, definition.Description, false);
+            var serial = doc.BeginUndoRecord("Rename Block definition");
+            var success = doc.InstanceDefinitions.Modify(definition, newName, definition.Description, false);
+            doc.EndUndoRecord(serial);
+            return success;
         }
 
         public static bool ChangeInstanceDefinitionGeometryLayer(InstanceDefinition definition, RhinoDoc doc, Layer layer)
@@ -35,7 +39,18 @@ namespace BetterBlocks.Core
                 attributes[i].LayerIndex = layer.Index;
             }
 
-            return doc.InstanceDefinitions.ModifyGeometry(definition.Index, geometries, attributes);
+            var serial = doc.BeginUndoRecord("Change Block geometry layer");
+            var success = doc.InstanceDefinitions.ModifyGeometry(definition.Index, geometries, attributes);
+            doc.EndUndoRecord(serial);
+            return success;
+        }
+
+        public static bool DeleteInstanceDefinition(InstanceDefinition definition, RhinoDoc doc)
+        {
+            var serial = doc.BeginUndoRecord("Delete Block definition");
+            var success = doc.InstanceDefinitions.Delete(definition);
+            doc.EndUndoRecord(serial);
+            return success;
         }
     }
 }

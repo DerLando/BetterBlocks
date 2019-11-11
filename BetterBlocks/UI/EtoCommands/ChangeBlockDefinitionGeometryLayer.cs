@@ -45,7 +45,7 @@ namespace BetterBlocks.UI.EtoCommands
             {
                 if (!Actions.ChangeInstanceDefinitionGeometryLayer(definition, doc, layer))
                 {
-                    RhinoApp.WriteLine($"Could not change geometry layer for {_definitions}");
+                    RhinoApp.WriteLine($"Could not change geometry layer for {definition}");
                 }
                 else
                 {
