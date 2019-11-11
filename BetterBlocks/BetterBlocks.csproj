@@ -58,6 +58,7 @@
     <Compile Include="BetterBlocksPlugIn.cs" />
     <Compile Include="Commands\bbTestCommand.cs" />
     <Compile Include="Commands\Hidden\bbHiddenSelectBlockInstancesByParent.cs" />
+    <Compile Include="Core\BlockPreview.cs" />
     <Compile Include="Core\BlockWatcher.cs" />
     <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\NestedBlock.cs" />

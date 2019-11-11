@@ -7,6 +7,10 @@ using Rhino.DocObjects;
 
 namespace BetterBlocks.UI.Views
 {
+    /// <summary>
+    /// Context menu for BlockTree GridView in bbManager
+    /// Handles Right-Clicks to show a context-menu from which commands can be launched
+    /// </summary>
 	public class BlockTreeContextMenu : ContextMenu
     {
 

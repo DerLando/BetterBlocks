@@ -13,7 +13,7 @@ namespace BetterBlocks.Core
     public class BlockWatcher
     {
         // Rhino document this blockwatcher instance is linked to
-        private readonly RhinoDoc _active_doc;
+        private RhinoDoc _active_doc;
 
         public InstanceDefinition[] InstanceDefinitions { get; private set; } = new InstanceDefinition[0];
         public NestedBlock[] NestedBlocks { get; private set; } = new NestedBlock[0];
@@ -65,6 +65,9 @@ namespace BetterBlocks.Core
             //    default:
             //        throw new ArgumentOutOfRangeException();
             //}
+
+            _active_doc = e.Document;
+
             GetDocumentBlocks();
         }
 

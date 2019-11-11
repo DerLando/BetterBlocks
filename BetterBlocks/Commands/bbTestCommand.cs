@@ -26,11 +26,9 @@ namespace BetterBlocks.Commands
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            NestedBlock[] nested = new NestedBlock[doc.InstanceDefinitions.Count];
-            for (int i = 0; i < doc.InstanceDefinitions.Count; i++)
-            {
-                nested[i] = new NestedBlock(doc, doc.InstanceDefinitions[i]);
-            }
+            var preview = new BlockPreview(doc.InstanceDefinitions[0]);
+
+            var image = preview.Preview;
 
             return Result.Success;
         }

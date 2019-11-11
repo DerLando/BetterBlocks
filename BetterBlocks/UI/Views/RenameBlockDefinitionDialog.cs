@@ -29,13 +29,21 @@ namespace BetterBlocks.UI.Views
             btn_OK.Click += On_btn_OK_Click;
             btn_Cancel.Click += On_btn_Cancel_Click;
 
+
             // initialize layout
             var layout = new DynamicLayout();
             layout.Add(tB_NewName);
             layout.AddSeparateRow(new[] {btn_OK, btn_Cancel});
             layout.Add(null);
 
+            // Set content, set up Enter KeyDown
             Content = layout;
+            Content.KeyDown += On_Content_KeyDown;
+        }
+
+        private void On_Content_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Keys.Enter) On_btn_OK_Click(sender, new EventArgs());
         }
 
         private void On_btn_Cancel_Click(object sender, EventArgs e)
