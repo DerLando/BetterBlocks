@@ -67,6 +67,7 @@
     <Compile Include="Core\Actions.cs" />
     <Compile Include="Core\BlockCount.cs" />
     <Compile Include="Core\BlockPreview.cs" />
+    <Compile Include="Core\BlockUsedBy.cs" />
     <Compile Include="Core\BlockWatcher.cs" />
     <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\NestedBlock.cs" />
@@ -85,8 +86,10 @@
     <Compile Include="UI\Views\BlockCountDialog.cs" />
     <Compile Include="UI\Views\BlockManagerPanel.cs" />
     <Compile Include="UI\Views\BlockTreeContextMenu.cs" />
+    <Compile Include="UI\Views\BlockUsedByDialog.cs" />
     <Compile Include="UI\Views\GetStringDialog.cs" />
     <Compile Include="UI\Views\SearchableGetLayerDialog.cs" />
+    <Compile Include="UI\Views\TableDataDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
