@@ -66,7 +66,12 @@ namespace BetterBlocks.UI.Models
 
         public static TreeGridItem ToTreeGridItem(this NestedBlock nested)
         {
-            TreeGridItem item = nested.Definition.ToTreeGridItem();
+            //TreeGridItem item = nested.Definition.ToTreeGridItem();
+            TreeGridItem item = new TreeGridItem
+            {
+                Tag = nested,
+                Values = nested.Definition.ToValues()
+            };
 
             foreach (var nestedBlock in nested)
             {
@@ -74,6 +79,16 @@ namespace BetterBlocks.UI.Models
             }
 
             return item;
+        }
+
+        public static NestedBlock ToNestedBlock(this TreeGridItem item)
+        {
+            return (NestedBlock) item.Tag;
+        }
+
+        public static InstanceDefinition ToInstanceDefinition(this TreeGridItem item)
+        {
+            return item.ToNestedBlock().Definition;
         }
 
         // If you want to implement both "*" and "?"

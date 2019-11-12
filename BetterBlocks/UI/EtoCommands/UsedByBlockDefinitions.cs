@@ -20,7 +20,7 @@ namespace BetterBlocks.UI.EtoCommands
         {
             base.OnExecuted(e);
             List<BlockUsedBy> usedBy = new List<BlockUsedBy>();
-            foreach (var definition in _definitions)
+            foreach (var definition in _definitions.Distinct())
             {
                 usedBy.AddRange(Factory.CreateUsedBys(definition));
             }

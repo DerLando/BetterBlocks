@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BetterBlocks.Core;
 using BetterBlocks.UI.EtoCommands;
+using BetterBlocks.UI.Models;
 using Eto.Forms;
 using Eto.Drawing;
 using Rhino.DocObjects;
@@ -22,6 +24,7 @@ namespace BetterBlocks.UI.Views
         private readonly DeleteInstanceDefinition _deleteCommand = new DeleteInstanceDefinition();
         private readonly CountBlockInstances _countCommand = new CountBlockInstances();
         private readonly UsedByBlockDefinitions _usedByCommand = new UsedByBlockDefinitions();
+        private readonly ExportNestedBlock _exportCommand = new ExportNestedBlock();
 
 		public BlockTreeContextMenu(TreeGridView parent)
         {
@@ -44,6 +47,10 @@ namespace BetterBlocks.UI.Views
             // Analyze Blocks
             Items.Add(_countCommand.CreateMenuItem());
             Items.Add(_usedByCommand.CreateMenuItem());
+            Items.Add(new SeparatorMenuItem());
+
+            // Export
+            Items.Add(_exportCommand.CreateMenuItem());
         }
 
         private void On_tv_parent_SelectedItemChanged(object sender, EventArgs e)
@@ -53,7 +60,12 @@ namespace BetterBlocks.UI.Views
 
         private void InitializeCommands()
         {
-            var definitions = TryGetParentSelectedInstanceDefinitions();
+            var nested = TryGetParentSelectedNestedBlocks();
+            var definitions = new InstanceDefinition[0];
+            if (nested != null)
+            {
+                definitions = (from block in nested select block.Definition).ToArray();
+            }
 
             _renameCommand.SetDefinition(definitions);
             _selectCommand.SetDefinition(definitions);
@@ -61,6 +73,15 @@ namespace BetterBlocks.UI.Views
             _deleteCommand.SetDefinition(definitions);
             _countCommand.SetDefinition(definitions);
             _usedByCommand.SetDefinition(definitions);
+            _exportCommand.SetDefinition(definitions);
+
+            _renameCommand.SetNested(nested);
+            _selectCommand.SetNested(nested);
+            _changeLayerCommand.SetNested(nested);
+            _deleteCommand.SetNested(nested);
+            _countCommand.SetNested(nested);
+            _usedByCommand.SetNested(nested);
+            _exportCommand.SetNested(nested);
         }
 
         private InstanceDefinition[] TryGetParentSelectedInstanceDefinitions()
@@ -73,10 +94,26 @@ namespace BetterBlocks.UI.Views
 
             for (int i = 0; i < selCount; i++)
             {
-                definitions[i] = (InstanceDefinition) ((TreeGridItem) selected[i]).Tag;
+                definitions[i] = ((TreeGridItem) selected[i]).ToInstanceDefinition();
             }
 
             return definitions;
+        }
+
+        private NestedBlock[] TryGetParentSelectedNestedBlocks()
+        {
+            if (_tv_parent.SelectedItem is null) return null;
+            int selCount = _tv_parent.SelectedItems.Count();
+            NestedBlock[] nested = new NestedBlock[selCount];
+
+            var selected = _tv_parent.SelectedItems.ToArray();
+
+            for (int i = 0; i < selCount; i++)
+            {
+                nested[i] = ((TreeGridItem)selected[i]).ToNestedBlock();
+            }
+
+            return nested;
         }
 
     }

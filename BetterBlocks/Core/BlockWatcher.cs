@@ -44,7 +44,7 @@ namespace BetterBlocks.Core
 
             for (int i = 0; i < NestedBlocks.Length; i++)
             {
-                NestedBlocks[i] = new NestedBlock(_active_doc, InstanceDefinitions[i]);
+                NestedBlocks[i] = new NestedBlock(InstanceDefinitions[i]);
             }
         }
 

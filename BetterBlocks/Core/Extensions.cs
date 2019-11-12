@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Rhino.DocObjects;
+using Rhino.FileIO;
+using Rhino.Geometry;
 
 namespace BetterBlocks.Core
 {
@@ -25,11 +27,19 @@ namespace BetterBlocks.Core
             return definition.InUse(0) | definition.InUse(1) | definition.InUse(2);
         }
 
+        public static IEnumerable<ChildBlockInsertionParameters> GetPartRelativeXforms(this InstanceDefinition definition)
+        {
+            return from obj in definition.GetObjects()
+                where obj.ObjectType == ObjectType.InstanceReference
+                let reference = obj as InstanceObject
+                select new ChildBlockInsertionParameters(reference.InsertionPoint, reference.InstanceXform);
+        }
+
         public static IEnumerable<InstanceObject> GetPartInstances(this InstanceDefinition definition)
         {
-            return (from obj in definition.GetObjects()
+            return from obj in definition.GetObjects()
                 where obj.ObjectType == ObjectType.InstanceReference
-                select (InstanceObject)obj);
+                select (InstanceObject)obj;
         }
 
         public static IEnumerable<InstanceDefinition> GetPartDefinitions(this InstanceDefinition definition)
@@ -57,5 +67,16 @@ namespace BetterBlocks.Core
 
             return count;
         }
+
+        //public static int[] AddNestedBlock(this File3dm file3dm, NestedBlock nested)
+        //{
+        //    List<int> indices = new List<int>();
+
+        //    for (int i = 0; i < nested.Count; i++)
+        //    {
+                
+        //    }
+        //}
+
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Rhino;
 using Rhino.Commands;
 using Rhino.DocObjects;
+using Rhino.FileIO;
 using Rhino.Geometry;
 
 namespace BetterBlocks.Core
@@ -131,8 +132,43 @@ namespace BetterBlocks.Core
 
         public static bool CountInstanceDefinitions(IEnumerable<InstanceDefinition> definitions, out IEnumerable<BlockCount> counts)
         {
-            counts = from definition in definitions select new BlockCount(definition);
+            counts = from definition in definitions.Distinct() select new BlockCount(definition);
             return true;
+        }
+
+        public static bool ExportNestedBlock(NestedBlock nested, string filePath)
+        {
+            var doc = new File3dm();
+
+            // Add all instance definitions
+            foreach (var references in nested.GetRootTreeByRootDepth().Reverse())
+            {
+                var nameIndexDict = new Dictionary<string, int>();
+                foreach (var referencedBlock in references)
+                {
+                    if (!nameIndexDict.ContainsKey(referencedBlock.Definition.Name))
+                    {
+                        var objs = referencedBlock.Definition.GetObjects();
+                        var geos = new GeometryBase[objs.Length];
+                        var attrs = new ObjectAttributes[objs.Length];
+                        for (int i = 0; i < objs.Length; i++)
+                        {
+                            geos[i] = objs[i].Geometry;
+                            attrs[i] = objs[i].Attributes;
+                        }
+
+                        var index = doc.AllInstanceDefinitions.Add(referencedBlock.Definition.Name, nested.Definition.Description,
+                            Point3d.Origin, geos, attrs);
+                        nameIndexDict.Add(referencedBlock.Definition.Name, index);
+                    }
+
+                    doc.Objects.AddInstanceObject(nameIndexDict[referencedBlock.Definition.Name],
+                        referencedBlock.BlockInsertionParameters.InstanceXform);
+
+                }
+            }
+
+            return doc.Write(filePath, RhinoApp.ExeVersion);
         }
 
     }

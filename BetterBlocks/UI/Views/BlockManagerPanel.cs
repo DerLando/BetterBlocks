@@ -165,7 +165,7 @@ namespace BetterBlocks.UI.Views
 
         private void On_tg_Blocks_SelectedRowsChanged(object sender, EventArgs e)
         {
-            var def = ((TreeGridItem)_tg_Blocks.SelectedItem).Tag as InstanceDefinition;
+            var def = ((TreeGridItem)_tg_Blocks.SelectedItem).ToInstanceDefinition();
 
             // set preview item
             System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(200, 100) : _iV_Preview.Size.ToDrawingSize();
@@ -184,7 +184,7 @@ namespace BetterBlocks.UI.Views
         {
             var name = ((TreeGridItem)e.Item).Values[0].ToString();
             if (string.IsNullOrEmpty(name)) return;
-            var def = ((TreeGridItem)e.Item).Tag as InstanceDefinition;
+            var def = ((TreeGridItem)e.Item).ToInstanceDefinition();
             def.Name = name;
         }
 
