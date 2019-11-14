@@ -22,15 +22,17 @@ namespace BetterBlocks.Core
             if (nested.HasParent)
             {
                 NestedBlock parent = nested.Parent;
+                int parentCount = 1;
                 while (parent.HasParent)
                 {
                     parent = parent.Parent;
+                    parentCount += 1;
                 }
-                var references = nested.Parent.GetRootTree();
+                var references = parent.GetRootTree();
                 var activeIndex = nested.Parent.GetActiveIndex(nested);
 
                 MainReference = new ReferencedBlock(parent);
-                ActivePart = references.Last()[activeIndex];
+                ActivePart = references[parentCount][activeIndex];
             }
             else
             {
