@@ -11,32 +11,51 @@ using Rhino.Geometry;
 
 namespace BetterBlocks.Core
 {
-    public class BlockPreview
+    public static class BlockPreview
     {
-        private readonly InstanceDefinition _definition;
-
-        public Image Preview { get; private set; }
-
-        public BlockPreview(InstanceDefinition definition)
+        public static Bitmap GeneratePreview(NestedBlock nested, RhinoDoc doc)
         {
-            _definition = definition;
+            var view = doc.Views.ActiveView;
+            var viewCapture = new ViewCapture
+            {
+                Height = Settings.BlockManagerPreviewHeight,
+                Width = Settings.BlockManagerPreviewWidth
+            };
 
-            Preview = GeneratePreview();
-        }
+            // store old settings
+            var cameraLocation = view.ActiveViewport.CameraLocation;
+            var cameraTarget = view.ActiveViewport.CameraTarget;
+            var cameraDirection = cameraTarget - cameraLocation;
+            var cameraUp = view.ActiveViewport.CameraUp;
+            var displayMode = view.ActiveViewport.DisplayMode;
+            view.ActiveViewport.NextViewProjection();
+            view.ActiveViewport.PushViewProjection();
 
-        private Image GeneratePreview()
-        {
-            var viewCapture = new ViewCapture();
-            viewCapture.Height = Settings.BlockManagerPreviewHeight;
-            viewCapture.Width = Settings.BlockManagerPreviewWidth;
+            view.ActiveViewport.SetProjection(Settings.BlockManagerPreviewProjection, null, false);
+            view.ActiveViewport.DisplayMode = Settings.BlockManagerPreviewDisplayModeDescription;
+            var conduit = new BlockPreviewConduit(nested);
+            conduit.Enabled = true;
+            doc.Views.RedrawEnabled = false;
 
-            var doc = RhinoDoc.ActiveDoc;
-            var view = doc.Views.AddPageView("TEMP", viewCapture.Width, viewCapture.Height);
-
-            var pipeline = view.DisplayPipeline;
-            pipeline.DrawPoint(new Point3d(1, 1, 0));
+            var bb = conduit.GetReferenceBoundingBox();
+            bb.Inflate(0.8, 0.8, 0.8);
+            //view.ActiveViewport.SetCameraLocation(bb.Corner(true, true, true), false);
+            //view.ActiveViewport.SetCameraTarget(bb.Center, false);
+            view.ActiveViewport.ZoomBoundingBox(bb);
+            view.Redraw();
 
             var image = viewCapture.CaptureToBitmap(view);
+
+            conduit.Enabled = false;
+
+            var prev = view.ActiveViewport.PreviousViewProjection();
+            //var popped = view.ActiveViewport.PopViewProjection();
+            view.ActiveViewport.CameraUp = cameraUp;
+            view.ActiveViewport.SetCameraLocation(cameraLocation, false);
+            view.ActiveViewport.SetCameraDirection(cameraDirection, false);
+            view.ActiveViewport.SetCameraTarget(cameraTarget, false);
+            view.ActiveViewport.DisplayMode = displayMode;
+            doc.Views.RedrawEnabled = true;
 
             return image;
         }

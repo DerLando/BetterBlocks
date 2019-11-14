@@ -6,6 +6,9 @@ using Rhino.UI;
 using System;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;
+using BetterBlocks.Core;
+using Rhino;
+using Extensions = BetterBlocks.UI.Models.Extensions;
 
 namespace BetterBlocks.UI.Views
 {
@@ -16,6 +19,8 @@ namespace BetterBlocks.UI.Views
         private readonly uint _document_sn;
 
         private SearchableBlockTreeModel _tree_model;
+
+        //private BlockPreviewConduit _preview_conduit;
 
         // Controls
         private TreeGridView _tg_Blocks = new TreeGridView();
@@ -166,6 +171,7 @@ namespace BetterBlocks.UI.Views
         private void On_tg_Blocks_SelectedRowsChanged(object sender, EventArgs e)
         {
             var def = ((TreeGridItem)_tg_Blocks.SelectedItem).ToInstanceDefinition();
+            var nested = ((TreeGridItem) _tg_Blocks.SelectedItem).ToNestedBlock();
 
             // set preview item
             System.Drawing.Size size = _iV_Preview.Size.IsZero
@@ -173,9 +179,13 @@ namespace BetterBlocks.UI.Views
                     Settings.BlockManagerPreviewHeight,
                     Settings.BlockManagerPreviewWidth)
                 : _iV_Preview.Size.ToDrawingSize();
-            var image = def.CreatePreviewBitmap(Settings.BlockManagerPreviewProjection,
-                Settings.BlockManagerPreviewDisplayMode, size);
-            _iV_Preview.Image = image.ToEto();
+
+            if (nested.PreviewImage == null)
+            {
+                nested.CreatePreviewImage(RhinoDoc.ActiveDoc);
+            }
+
+            _iV_Preview.Image = nested.PreviewImage.ToEto();
 
             // set Description
             _lbl_Description.Text = def.Description;

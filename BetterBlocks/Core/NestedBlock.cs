@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Eto.Drawing;
 using Rhino;
 using Rhino.DocObjects;
 using Rhino.Geometry;
@@ -17,6 +18,9 @@ namespace BetterBlocks.Core
         public InstanceDefinition Definition { get; private set; }
         public NestedBlock Parent { get; private set; } // Can be null!
         public ChildBlockInsertionParameters RelativeInsertion { get; private set; }
+
+        public System.Drawing.Bitmap PreviewImage { get; set; }
+        public bool HasParent => Parent != null;
 
         /// <summary>
         /// Standard constructed for a nested block instance.
@@ -41,12 +45,20 @@ namespace BetterBlocks.Core
             }
         }
 
+        public List<List<ReferencedBlock>> GetRootTree()
+        {
+            var rootTree = new List<List<ReferencedBlock>>();
+            _fillRootTree(ref rootTree);
+            return rootTree;
+        }
+
+
         /// <summary>
         /// Gets all children of the nested block which are root meaning,
         /// determined only by geometry and not by other block definitions
         /// </summary>
         /// <returns></returns>
-        public void GetRootTree(ref List<List<ReferencedBlock>> rootTree, int recursionDepth = 0)
+        private void _fillRootTree(ref List<List<ReferencedBlock>> rootTree, int recursionDepth = 0)
         {
             // On first iteration just fill with self
             if (rootTree.Count == 0)
@@ -78,14 +90,13 @@ namespace BetterBlocks.Core
             // Recurse over children and add to rootTree
             foreach (var nested in this)
             {
-                nested.GetRootTree(ref rootTree, recursionDepth + 1);
+                nested._fillRootTree(ref rootTree, recursionDepth + 1);
             }
         }
 
         public List<ReferencedBlock>[] GetRootTreeByRootDepth()
         {
-            var rootTree = new List<List<ReferencedBlock>>();
-            GetRootTree(ref rootTree);
+            var rootTree = GetRootTree();
 
             for (int i = 0; i < rootTree.Count - 1; i++)
             {
@@ -101,6 +112,17 @@ namespace BetterBlocks.Core
             }
 
             return rootTree.ToArray();
+        }
+
+        public int GetActiveIndex(NestedBlock child)
+        {
+            if (child.Equals(this)) return 0;
+            return this.IndexOf(child);
+        }
+
+        public void CreatePreviewImage(RhinoDoc doc)
+        {
+            PreviewImage = BlockPreview.GeneratePreview(this, doc);
         }
     }
 }

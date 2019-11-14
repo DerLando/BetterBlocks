@@ -67,6 +67,8 @@
     <Compile Include="Core\Actions.cs" />
     <Compile Include="Core\BlockCount.cs" />
     <Compile Include="Core\BlockPreview.cs" />
+    <Compile Include="Core\BlockPreviewConduit.cs" />
+    <Compile Include="Core\BlockPreviewDisplayMode.cs" />
     <Compile Include="Core\BlockUsedBy.cs" />
     <Compile Include="Core\BlockWatcher.cs" />
     <Compile Include="Core\ChildBlockInsertionParameters.cs" />

@@ -45,6 +45,7 @@ namespace BetterBlocks.Core
             for (int i = 0; i < NestedBlocks.Length; i++)
             {
                 NestedBlocks[i] = new NestedBlock(InstanceDefinitions[i]);
+                //NestedBlocks[i].CreatePreviewImage(_active_doc);
             }
         }
 
