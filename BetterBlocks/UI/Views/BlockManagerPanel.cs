@@ -59,7 +59,7 @@ namespace BetterBlocks.UI.Views
 
             // Set up tg constraints
             _tg_Blocks.Border = BorderType.Line;
-            _tg_Blocks.Height = 500;
+            _tg_Blocks.Height = Settings.BlockManagerTableHeight;
             _tg_Blocks.AllowMultipleSelection = true;
             _tg_Blocks.AllowColumnReordering = false;
             _tg_Blocks.ShowHeader = true;
@@ -168,7 +168,11 @@ namespace BetterBlocks.UI.Views
             var def = ((TreeGridItem)_tg_Blocks.SelectedItem).ToInstanceDefinition();
 
             // set preview item
-            System.Drawing.Size size = _iV_Preview.Size.IsZero ? new System.Drawing.Size(200, 100) : _iV_Preview.Size.ToDrawingSize();
+            System.Drawing.Size size = _iV_Preview.Size.IsZero
+                ? new System.Drawing.Size(
+                    Settings.BlockManagerPreviewHeight,
+                    Settings.BlockManagerPreviewWidth)
+                : _iV_Preview.Size.ToDrawingSize();
             var image = def.CreatePreviewBitmap(Settings.BlockManagerPreviewProjection,
                 Settings.BlockManagerPreviewDisplayMode, size);
             _iV_Preview.Image = image.ToEto();

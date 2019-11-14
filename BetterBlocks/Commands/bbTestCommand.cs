@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using BetterBlocks.Core;
 using Rhino;
 using Rhino.Commands;
@@ -26,9 +27,11 @@ namespace BetterBlocks.Commands
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
-            //var preview = new BlockPreview(doc.InstanceDefinitions[0]);
+            var preview = new BlockPreview(doc.InstanceDefinitions[0]);
 
-            //var image = preview.Preview;
+            var image = preview.Preview;
+
+            image.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "bbTest.jpg"));
 
             return Result.Success;
         }
