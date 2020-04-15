@@ -36,6 +36,11 @@ namespace BetterBlocks.Core
                 select new ChildBlockInsertionParameters(reference.InsertionPoint, reference.InstanceXform);
         }
 
+        /// <summary>
+        /// Gets all <see cref="InstanceObject"/>s assembled in the given <see cref="InstanceDefinition"/>
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
         public static IEnumerable<InstanceObject> GetPartInstances(this InstanceDefinition definition)
         {
             return from obj in definition.GetObjects()
@@ -43,6 +48,11 @@ namespace BetterBlocks.Core
                 select (InstanceObject)obj;
         }
 
+        /// <summary>
+        /// Gets all <see cref="InstanceDefinition"/>s assembled in the given <see cref="InstanceDefinition"/>
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
         public static IEnumerable<InstanceDefinition> GetPartDefinitions(this InstanceDefinition definition)
         {
             return from obj in definition.GetPartInstances() select obj.InstanceDefinition;
