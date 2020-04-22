@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterBlocks", "BetterBlocks\BetterBlocks.csproj", "{E76733E2-BFD9-428B-AF3B-50D37DA6C85B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocks.UI.WPF", "RealBlocks.UI.WPF\RealBlocks.UI.WPF.csproj", "{B455406B-C4FC-462E-A146-5F1DA2F7EB76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksUI", "RealBlocksUI\RealBlocksUI.csproj", "{93301A45-D6A2-464C-B79E-C2B279374B63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksUI.Library", "RealBlocksUI.Library\RealBlocksUI.Library.csproj", "{EAC98BEC-01B3-44E0-9348-F525FC6EA666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksDataManager", "RealBlocksDataManager\RealBlocksDataManager.csproj", "{50C825FE-DC4C-49AA-B144-A471CCBCDF24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksDataManager.Library", "RealBlocksDataManager.Library\RealBlocksDataManager.Library.csproj", "{104B3458-8069-4164-A067-D8D101B7ECD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +23,22 @@ Global
 		{E76733E2-BFD9-428B-AF3B-50D37DA6C85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E76733E2-BFD9-428B-AF3B-50D37DA6C85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E76733E2-BFD9-428B-AF3B-50D37DA6C85B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B455406B-C4FC-462E-A146-5F1DA2F7EB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B455406B-C4FC-462E-A146-5F1DA2F7EB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B455406B-C4FC-462E-A146-5F1DA2F7EB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B455406B-C4FC-462E-A146-5F1DA2F7EB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93301A45-D6A2-464C-B79E-C2B279374B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93301A45-D6A2-464C-B79E-C2B279374B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93301A45-D6A2-464C-B79E-C2B279374B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93301A45-D6A2-464C-B79E-C2B279374B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC98BEC-01B3-44E0-9348-F525FC6EA666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC98BEC-01B3-44E0-9348-F525FC6EA666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC98BEC-01B3-44E0-9348-F525FC6EA666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC98BEC-01B3-44E0-9348-F525FC6EA666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50C825FE-DC4C-49AA-B144-A471CCBCDF24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50C825FE-DC4C-49AA-B144-A471CCBCDF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50C825FE-DC4C-49AA-B144-A471CCBCDF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50C825FE-DC4C-49AA-B144-A471CCBCDF24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{104B3458-8069-4164-A067-D8D101B7ECD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104B3458-8069-4164-A067-D8D101B7ECD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104B3458-8069-4164-A067-D8D101B7ECD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104B3458-8069-4164-A067-D8D101B7ECD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

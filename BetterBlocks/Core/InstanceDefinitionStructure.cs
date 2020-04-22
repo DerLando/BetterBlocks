@@ -13,16 +13,30 @@ namespace BetterBlocks.Core
     /// <summary>
     /// A helper class to query information about <see cref="InstanceDefinition"/>s
     /// </summary>
-    public static class InstanceDefinitionStructure
+    public class InstanceDefinitionStructure
     {
+        #region private fields
+
+        private readonly InstanceDefinitionTable _table;
+
+        #endregion
+
+        #region Constructor
+
+        public InstanceDefinitionStructure(InstanceDefinitionTable table)
+        {
+            _table = table;
+        }
+
+        #endregion
+
         /// <summary>
         /// Gets all assemblies defined in the <see cref="InstanceDefinitionTable"/>
         /// </summary>
-        /// <param name="table">Table to query for assemblies</param>
         /// <returns></returns>
-        public static List<InstanceDefinitionItem> GetAssemblies(InstanceDefinitionTable table)
+        public List<InstanceDefinitionItem> GetAssemblies()
         {
-            return table
+            return _table
                 .Where(def => !def.IsRoot())
                 .Select(def => new InstanceDefinitionItem
                     {
@@ -37,24 +51,44 @@ namespace BetterBlocks.Core
         /// <summary>
         /// Gets the <see cref="InstanceDefinition"/> corresponding to a given <see cref="InstanceDefinitionItem"/>
         /// </summary>
-        /// <param name="table"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        private static InstanceDefinition GetRhinoDefinition(InstanceDefinitionTable table, InstanceDefinitionItem item)
+        private InstanceDefinition GetRhinoDefinition(InstanceDefinitionItem item)
         {
-            return table.Find(item.Id, true);
+            return GetRhinoDefinition(item.Id);
+        }
+
+        private InstanceDefinition GetRhinoDefinition(Guid id)
+        {
+            return _table.Find(id, true);
         }
 
         /// <summary>
         /// Gets the top level content of a <see cref="InstanceDefinitionItem"/>
         /// </summary>
-        /// <param name="table"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static List<InstanceDefinitionItem> GetInstanceDefinitionContents(InstanceDefinitionTable table, InstanceDefinitionItem item)
+        public List<InstanceDefinitionItem> GetInstanceDefinitionContents(InstanceDefinitionItem item)
         {
-            var definition = GetRhinoDefinition(table, item);
+            var definition = GetRhinoDefinition(item);
 
+            return GetInstanceDefinitionContents(definition);
+        }
+
+        /// <summary>
+        /// Gets the top level content of a <see cref="InstanceDefinitionItem"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<InstanceDefinitionItem> GetInstanceDefinitionContents(Guid id)
+        {
+            var definition = GetRhinoDefinition(id);
+
+            return GetInstanceDefinitionContents(definition);
+        }
+
+        private List<InstanceDefinitionItem> GetInstanceDefinitionContents(InstanceDefinition definition)
+        {
             return definition
                 .GetPartDefinitions()
                 .Select(def => new InstanceDefinitionItem(def))

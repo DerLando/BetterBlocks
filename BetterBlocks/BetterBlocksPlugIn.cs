@@ -1,6 +1,7 @@
 ﻿using BetterBlocks.Core;
 using BetterBlocks.UI.Models;
 using BetterBlocks.UI.Views;
+using Rhino;
 using Rhino.PlugIns;
 using Rhino.UI;
 
@@ -15,11 +16,30 @@ namespace BetterBlocks
     /// "Show All Files" to see it in the "Solution Explorer" window).</para>
     ///</summary>
     public class BetterBlocksPlugIn : Rhino.PlugIns.PlugIn
-
     {
+        #region Public properties
+
+        public InstanceDefinitionStructure InstanceDefinitionStructure { get; set; }
+
+        #endregion
+
         public BetterBlocksPlugIn()
         {
             Instance = this;
+
+            // Create InstanceDefinitionStructure
+            //InstanceDefinitionStructure = new InstanceDefinitionStructure(RhinoDoc.ActiveDoc.InstanceDefinitions);
+            //RhinoDoc.ActiveDocumentChanged += OnActiveDocChanged;
+        }
+
+        /// <summary>
+        /// Handles everything we need to do when changing documents
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnActiveDocChanged(object sender, DocumentEventArgs e)
+        {
+            InstanceDefinitionStructure = new InstanceDefinitionStructure(e.Document.InstanceDefinitions);
         }
 
         ///<summary>Gets the only instance of the BetterBlocksPlugIn plug-in.</summary>
@@ -35,6 +55,7 @@ namespace BetterBlocks
         {
             // make sure our panel loads nice :)
             Panels.Show += PanelsOnShow;
+
             return base.OnLoad(ref errorMessage);
         }
 
@@ -49,16 +70,23 @@ namespace BetterBlocks
         private void PanelsOnShow(object sender, ShowPanelEventArgs e)
         {
             // only do something if its actually for our panel
-            if (e.PanelId != BlockManagerPanel.PanelId) return;
+            if (e.PanelId == BlockManagerPanel.PanelId)
+            {
+                // get instance of our panel
+                var panel = Panels.GetPanel<BlockManagerPanel>(e.Document);
 
-            // get instance of our panel
-            var panel = Panels.GetPanel<BlockManagerPanel>(e.Document);
+                // check if already initialized with view-model
+                if (panel.IsModelInitialized) return;
 
-            // check if already initialized with view-model
-            if (panel.IsModelInitialized) return;
+                // initialize new view-model
+                panel.SetBlockTreeModel(new SearchableBlockTreeModel(new BlockTreeModel(new BlockWatcher(e.Document))));
+            }
 
-            // initialize new view-model
-            panel.SetBlockTreeModel(new SearchableBlockTreeModel(new BlockTreeModel(new BlockWatcher(e.Document))));
+            if (e.PanelId == typeof(BlockManager).GUID)
+            {
+                // Initialize structure
+                InstanceDefinitionStructure = new InstanceDefinitionStructure(e.Document.InstanceDefinitions);
+            }
         }
     }
 }
