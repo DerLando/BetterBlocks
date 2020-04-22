@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="RealBlocksUI.Views.BlockManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Background="White"
+        Height="auto" Width="auto">
+
+    <StackPanel Margin="4">
+
+        <GroupBox Name="GbFilter">
+            <GroupBox.Header>
+                <TextBlock Text="Filter"></TextBlock>
+            </GroupBox.Header>
+            <StackPanel>
+                <TextBox Name="TbSearch"></TextBox>
+                <Button Name="BtnCustomQuery" Content="Custom query">
+                </Button>
+            </StackPanel>
+        </GroupBox>
+
+        <TreeView Name="TvBlocks" Height="300" Margin="4">
+
+        </TreeView>
+
+        <Image Name="ImgPreview" Height="150" Margin="4"></Image>
+
+        <GroupBox Name="GbCommands">
+            <GroupBox.Header>
+                <TextBlock Text="Commands"></TextBlock>
+            </GroupBox.Header>
+            <StackPanel>
+                <Button Name="BtnDelete" Content="Delete"></Button>
+                <Button Name="BtnExport" Content="Export"></Button>
+                <Button Name="BtnChangeLayer" Content="Change layer"></Button>
+                <Button Name="BtnRename" Content="Rename"></Button>
+            </StackPanel>
+        </GroupBox>
+
+    </StackPanel>
+</UserControl>

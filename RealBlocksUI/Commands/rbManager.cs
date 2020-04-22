@@ -1,44 +1,44 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using BetterBlocks.UI.Views;
+using RealBlocksUI.Views;
 using Rhino;
 using Rhino.Commands;
 using Rhino.UI;
 
-namespace BetterBlocks.Commands
+namespace RealBlocksUI.Commands
 {
-    [Guid("9D722409-FF9D-4133-B52D-78FD31B5BD48")]
+    [Guid("D7FB9DEE-2AE0-42C8-A52E-D82A4D4F597A")]
     public class WpfManagerHost : RhinoWindows.Controls.WpfElementHost
     {
         public WpfManagerHost(uint docSn) : base(new BlockManager(docSn), null) { }
     }
 
-    public class bbShowWPFManager : Command
+    public class rbManager : Command
     {
-        static bbShowWPFManager _instance;
-        public bbShowWPFManager()
+        static rbManager _instance;
+        public rbManager()
         {
             _instance = this;
-            Panels.RegisterPanel(BetterBlocksPlugIn.Instance, typeof(WpfManagerHost), "Test", null);
+            Panels.RegisterPanel(RealBlocksUIPlugIn.Instance, typeof(WpfManagerHost), "Block Manager", null);
         }
 
-        ///<summary>The only instance of the bbShowWPFManager command.</summary>
-        public static bbShowWPFManager Instance
+        ///<summary>The only instance of the rbManager command.</summary>
+        public static rbManager Instance
         {
             get { return _instance; }
         }
 
         public override string EnglishName
         {
-            get { return "bbShowWPFManager"; }
+            get { return "rbManager"; }
         }
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             // TODO: complete command.
 
-            var panel_id = typeof(BlockManager).GUID;
-            var visible = Panels.IsPanelVisible(panel_id);
+            var panelId = typeof(WpfManagerHost).GUID;
+            var visible = Panels.IsPanelVisible(panelId);
 
             var prompt = (visible)
                 ? "Sample panel is visible. New value"
@@ -49,9 +49,9 @@ namespace BetterBlocks.Commands
             // toggle visible
             if (!visible)
             {
-                Panels.OpenPanel(panel_id);
+                Panels.OpenPanel(panelId);
             }
-            else Panels.ClosePanel(panel_id);
+            else Panels.ClosePanel(panelId);
 
             return Result.Success;
         }
