@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using RealBlocksUI.Library.Models;
 using RealBlocksUI.ViewModels;
 using Rhino.PlugIns;
@@ -36,9 +37,12 @@ namespace RealBlocksUI
         private IMapper ConfigureMapper()
         {
             var config = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<InstanceDefinitionModel, InstanceDefinitionDisplayModel>();
-                });
+            {
+                cfg
+                    .CreateMap<InstanceDefinitionModel, InstanceDefinitionDisplayModel>()
+                    .AfterMap((src, dest) => dest.Initialize())
+                    ;
+            });
 
             var mapper = config.CreateMapper();
 

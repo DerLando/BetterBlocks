@@ -22,6 +22,15 @@
 
         <TreeView Name="TvBlocks" Height="300" Margin="4"
                   ItemsSource="{Binding InstanceDefinitions}">
+
+            <!--Expanding arrow binding-->
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"></Setter>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+            <!--Item styling-->
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                     <StackPanel Orientation="Horizontal">

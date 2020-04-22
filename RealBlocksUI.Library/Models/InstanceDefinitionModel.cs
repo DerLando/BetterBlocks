@@ -40,6 +40,12 @@ namespace RealBlocksUI.Library.Models
         /// </summary>
         public bool IsInUse { get; set; }
 
+        /// <summary>
+        /// Determines if the definition is assembled from other definitions
+        /// or a 'pure' definition made up only of geometry
+        /// </summary>
+        public bool IsAssembly { get; set; }
+
         // TODO: A InstanceDefinition does not store user strings,
         // TODO: If we want to keep track of those we have to query the Inserts
         // TODO: f.e.: InstanceDefinition.GetReferences(2).ForEach(o => o.GetUserStrings())

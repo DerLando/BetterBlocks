@@ -21,8 +21,7 @@ namespace RealBlocksUI.Converters
                 "assembly_icon.png" : 
                 "root_icon.png";
 
-            var test = new BitmapImage(new Uri($"pack://application:,,,/RealBlocksUI;component/Images/{imageName}"));
-            return test;
+            return new BitmapImage(new Uri($"pack://application:,,,/RealBlocksUI;component/Images/{imageName}"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -16,6 +16,24 @@ namespace RealBlocksUI.Library.Api
                 {
                     Id = d.Id,
                     Index = d.Index,
+                    IsAssembly = d.IsAssembly,
+                    IsInUse = d.IsInUse,
+                    Name = d.Name,
+                    ObjectCount = d.ObjectCount,
+                    ObjectIds = d.ObjectIds,
+                })
+                ;
+        }
+
+        public IEnumerable<InstanceDefinitionModel> GetChildren(Guid id)
+        {
+            return InstanceDefinitionData
+                .GetChildrenById(id)
+                .Select(d => new InstanceDefinitionModel
+                {
+                    Id = d.Id,
+                    Index = d.Index,
+                    IsAssembly = d.IsAssembly,
                     IsInUse = d.IsInUse,
                     Name = d.Name,
                     ObjectCount = d.ObjectCount,

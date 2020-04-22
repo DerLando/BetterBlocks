@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RealBlocksDataManager.Library.Extensions;
 using RealBlocksDataManager.Library.Factories;
 using RealBlocksDataManager.Library.Internal.DataAccess;
 using RealBlocksDataManager.Library.Models;
@@ -22,6 +23,24 @@ namespace RealBlocksDataManager.Library.DataAccess
                 .GetDocumentInstanceDefinitions()
                 .Select(InstanceDefinitionModelFactory.Create)
                 ;
+        }
+
+        public static IEnumerable<InstanceDefinitionModel> GetAssemblies()
+        {
+            var dataAccess = new InstanceTableDataAccess();
+            return dataAccess
+                    .GetDocumentInstanceDefinitions()
+                    .Where(d => !d.IsRoot())
+                    .Select(InstanceDefinitionModelFactory.Create)
+                ;
+        }
+
+        public static IEnumerable<InstanceDefinitionModel> GetChildrenById(Guid id)
+        {
+            var dataAccess = new InstanceTableDataAccess();
+            return dataAccess
+                .GetNestedDefinitions(id)
+                .Select(InstanceDefinitionModelFactory.Create);
         }
     }
 }
