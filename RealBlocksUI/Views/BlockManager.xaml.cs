@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using RealBlocksUI.Library.Api;
 using RealBlocksUI.ViewModels;
 
 namespace RealBlocksUI.Views
@@ -12,7 +13,11 @@ namespace RealBlocksUI.Views
         {
             InitializeComponent();
 
-            this.DataContext = new BlockManagerViewModel(docSn);
+            this.DataContext = new BlockManagerViewModel(
+                docSn, 
+                new InstanceDefinitionEndpoint(), 
+                RealBlocksUIPlugIn.Mapper
+                );
         }
     }
 }

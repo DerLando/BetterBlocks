@@ -1,4 +1,7 @@
-﻿using Rhino.PlugIns;
+﻿using AutoMapper;
+using RealBlocksUI.Library.Models;
+using RealBlocksUI.ViewModels;
+using Rhino.PlugIns;
 
 namespace RealBlocksUI
 {
@@ -16,12 +19,30 @@ namespace RealBlocksUI
         public RealBlocksUIPlugIn()
         {
             Instance = this;
+            Mapper = ConfigureMapper();
         }
 
         ///<summary>Gets the only instance of the RealBlocksUIPlugIn plug-in.</summary>
         public static RealBlocksUIPlugIn Instance
         {
             get; private set;
+        }
+
+        /// <summary>
+        /// Automapper singleton to map from data to display models
+        /// </summary>
+        public static IMapper Mapper { get; private set; }
+
+        private IMapper ConfigureMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<InstanceDefinitionModel, InstanceDefinitionDisplayModel>();
+                });
+
+            var mapper = config.CreateMapper();
+
+            return mapper;
         }
 
         // You can override methods here to change the plug-in behavior on

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RhinoWindows">
@@ -66,9 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\rbManager.cs" />
+    <Compile Include="Converters\AssemblyToImageConverter.cs" />
     <Compile Include="RealBlocksUICommand.cs" />
     <Compile Include="RealBlocksUIPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Base\DisplayModelBase.cs" />
+    <Compile Include="ViewModels\InstanceDefinitionDisplayModel.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
     <Compile Include="ViewModels\BlockManagerViewModel.cs" />
     <Compile Include="Views\BlockManager.xaml.cs">
@@ -89,6 +95,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\assembly_icon.png" />
+    <Resource Include="Images\root_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

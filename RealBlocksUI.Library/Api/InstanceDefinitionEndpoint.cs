@@ -7,7 +7,7 @@ using RealBlocksUI.Library.Models;
 
 namespace RealBlocksUI.Library.Api
 {
-    public class InstanceDefinitionEndpoint
+    public class InstanceDefinitionEndpoint : IInstanceDefinitionEndpoint
     {
         public IEnumerable<InstanceDefinitionModel> GetAll()
         {

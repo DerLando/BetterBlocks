@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:RealBlocksUI.Converters"
         mc:Ignorable="d" Background="White"
         Height="auto" Width="auto">
 
@@ -19,8 +20,18 @@
             </StackPanel>
         </GroupBox>
 
-        <TreeView Name="TvBlocks" Height="300" Margin="4">
-
+        <TreeView Name="TvBlocks" Height="300" Margin="4"
+                  ItemsSource="{Binding InstanceDefinitions}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="20" Margin="3"
+                               Source="{Binding IsAssembly,
+                            Converter={x:Static converters:AssemblyToImageConverter.Instance}}" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
 
         <Image Name="ImgPreview" Height="150" Margin="4"></Image>
