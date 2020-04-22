@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RealBlocksUI.Library.Api;
 using Rhino;
 using Rhino.Commands;
 using Rhino.Geometry;
@@ -32,6 +33,9 @@ namespace RealBlocksUI
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
         {
             RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
+
+            var endPoint = new InstanceDefinitionEndpoint();
+            var test = endPoint.GetAll();
 
             return Result.Success;
         }

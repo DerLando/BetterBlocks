@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Rhino;
 using Rhino.DocObjects;
 using Rhino.DocObjects.Tables;
 
-namespace RealBlocksDataManager.Library.DataAccess
+namespace RealBlocksDataManager.Library.Internal.DataAccess
 {
-    public class InstanceTableDataAccess
+    internal class InstanceTableDataAccess
     {
         #region private fields
 
         /// <summary>
         /// The <see cref="RhinoDoc"/> of which the <see cref="InstanceDefinitionTable"/> gets accessed
         /// </summary>
-        private RhinoDoc _doc;
+        private readonly RhinoDoc _doc;
 
         #endregion
 

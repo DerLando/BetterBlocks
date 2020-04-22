@@ -21,14 +21,14 @@ using Rhino.PlugIns;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RealBlocksUI")]
+[assembly: AssemblyTitle("RealBlocks")]
 
 // This will be used also for the plug-in description.
-[assembly: AssemblyDescription("RealBlocksUI utility plug-in")]
+[assembly: AssemblyDescription("RealBlocks utility plug-in")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RealBlocksUI")]
+[assembly: AssemblyProduct("RealBlocks")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
