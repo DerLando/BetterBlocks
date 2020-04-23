@@ -53,6 +53,11 @@ namespace RealBlocksUI.ViewModels
         /// </summary>
         public bool IsAssembly { get; set; }
 
+        /// <summary>
+        /// The description text of the block definition
+        /// </summary>
+        public string Description { get; set; }
+
         // TODO: A InstanceDefinition does not store user strings,
         // TODO: If we want to keep track of those we have to query the Inserts
         // TODO: f.e.: InstanceDefinition.GetReferences(2).ForEach(o => o.GetUserStrings())
@@ -98,16 +103,23 @@ namespace RealBlocksUI.ViewModels
 
         }
 
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                RaisePropertyChanged(nameof(IsSelected));
+            }
+        }
+
         #endregion
 
         #region Constructor
 
-        public InstanceDefinitionDisplayModel()
-        {
-            Initialize();
-        }
-
-        public void Initialize()
+        public override void Initialize()
         {
             // Create commands
             this.ExpandCommand = new RelayCommand(Expand);

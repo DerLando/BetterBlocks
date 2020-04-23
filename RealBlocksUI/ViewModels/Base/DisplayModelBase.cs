@@ -15,5 +15,12 @@ namespace RealBlocksUI.ViewModels.Base
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
+        /// <summary>
+        /// Initializes inner display states
+        /// can be called from Automapper after mapping to this model
+        /// The default implementation does nothing
+        /// </summary>
+        public virtual void Initialize() { }
     }
 }

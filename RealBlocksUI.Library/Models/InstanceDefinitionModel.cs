@@ -46,6 +46,11 @@ namespace RealBlocksUI.Library.Models
         /// </summary>
         public bool IsAssembly { get; set; }
 
+        /// <summary>
+        /// The description text of the block definition
+        /// </summary>
+        public string Description { get; set; }
+
         // TODO: A InstanceDefinition does not store user strings,
         // TODO: If we want to keep track of those we have to query the Inserts
         // TODO: f.e.: InstanceDefinition.GetReferences(2).ForEach(o => o.GetUserStrings())

@@ -16,6 +16,9 @@ namespace RealBlocksUI.ViewModels
         #region Backing fields
 
         private BindingList<InstanceDefinitionDisplayModel> _instanceDefinitions;
+        private InstanceDefinitionDisplayModel _selectedItem;
+
+        private readonly DelegateCommand<InstanceDefinitionDisplayModel> _selectDefinitionCommand;
 
         private readonly IInstanceDefinitionEndpoint _instanceDefinitionEndpoint;
         private readonly IMapper _mapper;
@@ -37,6 +40,14 @@ namespace RealBlocksUI.ViewModels
 
             // Populate Instance definitions
             LoadInstanceDefinitions();
+
+            // Initialize commands
+            _selectDefinitionCommand = new DelegateCommand<InstanceDefinitionDisplayModel>(
+                (d) => true,
+                (d) =>
+                {
+                    SelectedItem = GetSelectedItem();
+                });
         }
 
         private void LoadInstanceDefinitions()
@@ -63,6 +74,60 @@ namespace RealBlocksUI.ViewModels
             }
         }
 
+        public InstanceDefinitionDisplayModel SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                RaisePropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+        public DelegateCommand<InstanceDefinitionDisplayModel> SelectDefinitionCommand => _selectDefinitionCommand;
+
+        #endregion
+
+        #region Helper methods
+
+        private InstanceDefinitionDisplayModel GetSelectedItem()
+        {
+            // if there is no collection we can't do anything
+            if (InstanceDefinitions.Count == 0) return null;
+
+            // Walk the tree
+            foreach (var model in InstanceDefinitions)
+            {
+                // early exit
+                if (model.IsSelected)
+                    return model;
+
+                var selected = GetSelectedItem(model);
+                if (selected != null) return selected;
+            }
+
+            return null;
+        }
+
+        private static InstanceDefinitionDisplayModel GetSelectedItem(InstanceDefinitionDisplayModel model)
+        {
+            if (model.IsSelected)
+                return model;
+
+            // recursion (•_•) ( •_•)>⌐■-■ (⌐■_■)
+            foreach (var childModel in model.Children)
+            {
+                if (childModel == null)
+                    continue;
+
+                var selected = GetSelectedItem(childModel);
+                if (selected == null) continue;
+
+                return selected;
+            }
+
+            return null;
+        }
         #endregion
     }
 }

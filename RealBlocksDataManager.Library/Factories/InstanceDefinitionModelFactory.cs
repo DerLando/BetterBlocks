@@ -13,6 +13,7 @@ namespace RealBlocksDataManager.Library.Factories
         {
             return new InstanceDefinitionModel
             {
+                Description = definition.Description,
                 Id = definition.Id,
                 Index = definition.Index,
                 IsInUse = definition.InUse(2),

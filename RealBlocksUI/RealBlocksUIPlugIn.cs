@@ -40,7 +40,7 @@ namespace RealBlocksUI
             {
                 cfg
                     .CreateMap<InstanceDefinitionModel, InstanceDefinitionDisplayModel>()
-                    .AfterMap((src, dest) => dest.Initialize())
+                    .AfterMap((src, dest) => dest.Initialize()) // Call Initialize() after mapping
                     ;
             });
 

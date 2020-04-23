@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterBlocks", "BetterBlock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksUI", "RealBlocksUI\RealBlocksUI.csproj", "{93301A45-D6A2-464C-B79E-C2B279374B63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksUI.Library", "RealBlocksUI.Library\RealBlocksUI.Library.csproj", "{EAC98BEC-01B3-44E0-9348-F525FC6EA666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealBlocksUI.Library", "RealBlocksUI.Library\RealBlocksUI.Library.csproj", "{EAC98BEC-01B3-44E0-9348-F525FC6EA666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksDataManager", "RealBlocksDataManager\RealBlocksDataManager.csproj", "{50C825FE-DC4C-49AA-B144-A471CCBCDF24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealBlocksDataManager", "RealBlocksDataManager\RealBlocksDataManager.csproj", "{50C825FE-DC4C-49AA-B144-A471CCBCDF24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealBlocksDataManager.Library", "RealBlocksDataManager.Library\RealBlocksDataManager.Library.csproj", "{104B3458-8069-4164-A067-D8D101B7ECD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealBlocksDataManager.Library", "RealBlocksDataManager.Library\RealBlocksDataManager.Library.csproj", "{104B3458-8069-4164-A067-D8D101B7ECD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
