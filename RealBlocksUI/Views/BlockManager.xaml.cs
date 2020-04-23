@@ -19,5 +19,15 @@ namespace RealBlocksUI.Views
                 RealBlocksUIPlugIn.Mapper
                 );
         }
+
+        /// <summary>
+        /// Code behind is bad bad, but there does not seem to be an easy way to do this
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TvBlocks_SelectedItemChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<object> e)
+        {
+            ((BlockManagerViewModel)DataContext).SelectedItem = (InstanceDefinitionDisplayModel)e.NewValue;
+        }
     }
 }

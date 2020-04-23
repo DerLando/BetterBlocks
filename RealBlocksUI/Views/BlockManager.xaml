@@ -9,7 +9,7 @@
 
     <StackPanel Margin="4">
 
-        <GroupBox Name="GbFilter">
+        <GroupBox Name="GbFilter" Padding="4">
             <GroupBox.Header>
                 <TextBlock Text="Filter"></TextBlock>
             </GroupBox.Header>
@@ -21,7 +21,8 @@
         </GroupBox>
 
         <TreeView x:Name="TvBlocks" Height="300" Margin="4"
-                  ItemsSource="{Binding InstanceDefinitions}">
+                  ItemsSource="{Binding InstanceDefinitions}"
+                  SelectedItemChanged="TvBlocks_SelectedItemChanged">
 
             <!--Expanding arrow binding-->
             <TreeView.ItemContainerStyle>
@@ -45,13 +46,13 @@
         </TreeView>
 
         <TextBlock Name="TbDescription" TextWrapping="Wrap"
-                   Text="{Binding ElementName=TvBlocks, Path=SelectedItem}">
+                   Text="{Binding SelectedItem.Description}">
 
         </TextBlock>
 
         <Image Name="ImgPreview" Height="150" Margin="4"></Image>
 
-        <GroupBox Name="GbCommands">
+        <GroupBox Name="GbCommands" Padding="4">
             <GroupBox.Header>
                 <TextBlock Text="Commands"></TextBlock>
             </GroupBox.Header>

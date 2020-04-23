@@ -74,6 +74,9 @@ namespace RealBlocksUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// The currently selected <see cref="InstanceDefinitionDisplayModel"/>
+        /// </summary>
         public InstanceDefinitionDisplayModel SelectedItem
         {
             get => _selectedItem;
@@ -81,7 +84,16 @@ namespace RealBlocksUI.ViewModels
             {
                 _selectedItem = value;
                 RaisePropertyChanged(nameof(SelectedItem));
+                RaisePropertyChanged(nameof(Description));
             }
+        }
+
+        /// <summary>
+        /// The description text of the currently selected <see cref="InstanceDefinitionDisplayModel"/>
+        /// </summary>
+        public string Description
+        {
+            get => SelectedItem?.Description;
         }
 
         public DelegateCommand<InstanceDefinitionDisplayModel> SelectDefinitionCommand => _selectDefinitionCommand;

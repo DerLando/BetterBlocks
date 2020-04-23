@@ -14,6 +14,7 @@ namespace RealBlocksUI.Library.Api
             return InstanceDefinitionData.GetInstanceDefinitions()
                 .Select(d => new InstanceDefinitionModel
                 {
+                    Description = d.Description,
                     Id = d.Id,
                     Index = d.Index,
                     IsAssembly = d.IsAssembly,
