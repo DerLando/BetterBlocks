@@ -32,6 +32,7 @@ namespace RealBlocksUI.Library.Api
                 .GetChildrenById(id)
                 .Select(d => new InstanceDefinitionModel
                 {
+                    Description = d.Description,
                     Id = d.Id,
                     Index = d.Index,
                     IsAssembly = d.IsAssembly,

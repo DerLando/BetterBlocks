@@ -115,6 +115,20 @@ namespace RealBlocksUI.ViewModels
             }
         }
 
+        private InstanceDefinitionDisplayModel _root;
+
+        public InstanceDefinitionDisplayModel Root
+        {
+            get => _root;
+            set
+            {
+                _root = value;
+                RaisePropertyChanged(nameof(Root));
+            }
+        }
+
+        public bool HasRoot => Root != null;
+
         #endregion
 
         #region Constructor
@@ -167,14 +181,36 @@ namespace RealBlocksUI.ViewModels
 
             // Find all children
             // TODO: Find a way to not new this up
-            var endpoint = new InstanceDefinitionEndpoint();
-            var childrenList = endpoint.GetChildren(this.Id);
-            var children = RealBlocksUIPlugIn.Mapper.Map<List<InstanceDefinitionDisplayModel>>(childrenList);
+            var children = GetChildren();
+
+            // If we have a root, cascade it to all children
+            if (this.HasRoot)
+                children
+                    .ForEach(d => d.Root = this.Root)
+                    ;
+            // If we are the root, cascade ourself instead
+            else
+                children
+                    .ForEach(d => d.Root = this)
+                    ;
 
             this.Children = new ObservableCollection<InstanceDefinitionDisplayModel>(children);
         }
 
+        #endregion
 
+        #region Helpers
+
+        /// <summary>
+        /// Gets all children using a <see cref="InstanceDefinitionEndpoint"/>
+        /// </summary>
+        /// <returns></returns>
+        private List<InstanceDefinitionDisplayModel> GetChildren()
+        {
+            var endpoint = new InstanceDefinitionEndpoint();
+            var childrenList = endpoint.GetChildren(this.Id);
+            return RealBlocksUIPlugIn.Mapper.Map<List<InstanceDefinitionDisplayModel>>(childrenList);
+        }
 
         #endregion
     }

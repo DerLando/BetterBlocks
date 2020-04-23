@@ -25,6 +25,10 @@ namespace RealBlocksDataManager.Library.DataAccess
                 ;
         }
 
+        /// <summary>
+        /// Returns all Instance definition models that are of type assembly
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<InstanceDefinitionModel> GetAssemblies()
         {
             var dataAccess = new InstanceTableDataAccess();
@@ -35,6 +39,12 @@ namespace RealBlocksDataManager.Library.DataAccess
                 ;
         }
 
+        /// <summary>
+        /// Gets all the first level children of a Instance definition
+        /// given its id
+        /// </summary>
+        /// <param name="id">The id of the Instance definition to find the children of</param>
+        /// <returns></returns>
         public static IEnumerable<InstanceDefinitionModel> GetChildrenById(Guid id)
         {
             var dataAccess = new InstanceTableDataAccess();
