@@ -11,9 +11,13 @@ namespace RealBlocksUI.Library.Api
 {
     public class PreviewImageEndpoint : IPreviewImageEndpoint
     {
-        public BitmapImage Get(Guid id, int width, int height)
+        /// <summary>
+        /// Converts a <see cref="Image"/> to a <see cref="BitmapImage"/>
+        /// </summary>
+        /// <param name="image">Image to convert</param>
+        /// <returns></returns>
+        private BitmapImage ConvertFrom(Image image)
         {
-            var image = ImageData.GetPreviewImage(id, width, height);
             var bitmap = new Bitmap(image);
 
             BitmapImage result;
@@ -30,6 +34,20 @@ namespace RealBlocksUI.Library.Api
             }
 
             return result;
+        }
+
+        public BitmapImage Get(Guid id, int width, int height)
+        {
+            var image = ImageData.GetPreviewImage(id, width, height);
+
+            return ConvertFrom(image);
+        }
+
+        public BitmapImage Get(Guid mainId, Guid activePartId, int width, int height)
+        {
+            var image = ImageData.GetPreviewImage(mainId, activePartId, width, height);
+
+            return ConvertFrom(image);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace RealBlocksUI
         {
             RhinoApp.WriteLine("The {0} command is under construction.", EnglishName);
 
-            var endPoint = new InstanceDefinitionEndpoint();
+            var endPoint = new NestedDefinitionEndpoint();
             var test = endPoint.GetAll();
 
             return Result.Success;

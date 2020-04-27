@@ -31,10 +31,34 @@ namespace RealBlocksDataManager.Library.DataAccess
         /// <param name="width">width of the preview image in pixels</param>
         /// <param name="height">height of the preview image in pixels</param>
         /// <returns></returns>
-        public static Image GetPreviewImage(InstanceDefinition definition, int width, int height)
+        private static Image GetPreviewImage(InstanceDefinition definition, int width, int height)
         {
             var imageAccess = new PreviewImageTableDataAccess();
             return imageAccess.GetPreview(definition, width, height);
+        }
+
+        /// <summary>
+        /// Gets a preview image for the given block definitions id
+        /// highlighting the supplied nested active part definitions id
+        /// </summary>
+        /// <param name="mainId">Guid of the main instance definition</param>
+        /// <param name="activePartId">Guid of the nested part definition which should be highlighted</param>
+        /// <param name="width">width of the preview image in pixels</param>
+        /// <param name="height">height of the preview image in pixels</param>
+        /// <returns></returns>
+        public static Image GetPreviewImage(Guid mainId, Guid activePartId, int width, int height)
+        {
+            var instanceAccess = new InstanceTableDataAccess();
+            var main = instanceAccess.GetDefinition(mainId);
+            var active = instanceAccess.GetDefinition(activePartId);
+
+            return GetPreviewImage(main, active, width, height);
+        }
+
+        private static Image GetPreviewImage(InstanceDefinition main, InstanceDefinition active, int width, int height)
+        {
+            var imageAccess = new PreviewImageTableDataAccess();
+            return imageAccess.GetNestedPreview(main, active, width, height);
         }
     }
 }

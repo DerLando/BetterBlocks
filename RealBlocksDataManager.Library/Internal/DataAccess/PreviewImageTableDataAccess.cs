@@ -26,7 +26,16 @@ namespace RealBlocksDataManager.Library.Internal.DataAccess
                 new InsertedInstanceModel(definition));
         }
 
-        public Image GetPreview(InstanceDefinition definition, int width, int height)
+        private NestedInstanceDefinitionConduit GetNestedPreviewConduit(InstanceDefinition main, InstanceDefinition nested)
+        {
+            var instanceAccess = new InstanceTableDataAccess();
+            var relative = instanceAccess.GetNestedRelativeInserted(main.Id, nested.Id);
+            return new NestedInstanceDefinitionConduit(
+                new InsertedInstanceModel(main),
+                relative);
+        }
+
+        private Image GetPreviewHelper(InstanceDefinitionConduit conduit, int width, int height)
         {
             var doc = RhinoDoc.ActiveDoc;
             var view = doc.Views.ActiveView;
@@ -39,7 +48,6 @@ namespace RealBlocksDataManager.Library.Internal.DataAccess
             view.ActiveViewport.SetProjection(DefinedViewportProjection.Perspective, null, false);
 
             // get conduit and enable it
-            var conduit = GetPreviewConduit(definition);
             conduit.Enabled = true;
 
             // disable redraw
@@ -65,6 +73,20 @@ namespace RealBlocksDataManager.Library.Internal.DataAccess
 
             // return captured imaged
             return image;
+        }
+
+        public Image GetNestedPreview(InstanceDefinition main, InstanceDefinition nested, int width, int height)
+        {
+            var conduit = GetNestedPreviewConduit(main, nested);
+
+            return GetPreviewHelper(conduit, width, height);
+        }
+
+        public Image GetPreview(InstanceDefinition definition, int width, int height)
+        {
+            var conduit = GetPreviewConduit(definition);
+
+            return GetPreviewHelper(conduit, width, height);
         }
     }
 

@@ -91,7 +91,7 @@ namespace RealBlocksUI.ViewModels
                 RaisePropertyChanged(nameof(Description));
 
                 // Calculate preview image
-                CalculateCurrentPreview();
+                GetCurrentPreview();
             }
         }
 
@@ -153,13 +153,32 @@ namespace RealBlocksUI.ViewModels
             return null;
         }
 
-        private void CalculateCurrentPreview()
+        /// <summary>
+        /// Gets the preview image for the currently selected Item
+        /// from the <see cref="PreviewImageEndpoint"/> and sets the
+        /// PreviewImage property
+        /// </summary>
+        private void GetCurrentPreview()
         {
-            if (this.SelectedItem == null) return;
+            // If we have no selected item, we can't draw a preview
+            if (this.SelectedItem == null)
+            {
+                PreviewImage = null;
+                return;
+            }
 
-            this.PreviewImage =
-                this._previewImageEndpoint
-                .Get(this.SelectedItem.Id, 200, 100);
+            // If the selected Itam is a top-level definition
+            if(!this.SelectedItem.HasRoot)
+                this.PreviewImage =
+                    this._previewImageEndpoint
+                    .Get(this.SelectedItem.Id, 200, 100);
+
+            else
+            {
+                this.PreviewImage =
+                    this._previewImageEndpoint
+                    .Get(this.SelectedItem.Root.Id, this.SelectedItem.Id, 200, 100);
+            }
 
             RaisePropertyChanged(nameof(PreviewImage));
         }

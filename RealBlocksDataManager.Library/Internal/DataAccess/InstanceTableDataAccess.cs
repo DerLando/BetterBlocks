@@ -61,6 +61,18 @@ namespace RealBlocksDataManager.Library.Internal.DataAccess
         /// <returns></returns>
         public int GetNestingIndex(Guid mainId, Guid nestedId)
         {
+            // TODO: This does not work. We need to supply a nesting depth and also an index
+            // to know where the part is located inside of its parent
+            // probably best to pass those when GetChildren is called
+            // we could construct a tree-like data structure where a definition node
+            // knows its immediate parent, its root and its partIndex inside of the immediate parent
+            // this way we can always know where each definition is referenced from
+            // For this we will need to traverse the whole instance definition tree on startup
+            // and after every change, which is super costly :/
+            // On the brighter side: this will allow us to handle user strings on nested definitions :)
+            var def = GetDefinition(mainId);
+            var nested = GetDefinition(nestedId);
+            var debug = def.GetObjectIds();
             return Array.IndexOf(
                 GetDefinition(mainId).GetObjectIds(),
                 nestedId
