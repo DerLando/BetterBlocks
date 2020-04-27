@@ -1,14 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WindowsBase" Version="4.6.1055" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RealBlocksDataManager.Library\RealBlocksDataManager.Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="RhinoCommon">
       <HintPath>C:\Program Files\Rhino 6\System\RhinoCommon.dll</HintPath>
     </Reference>

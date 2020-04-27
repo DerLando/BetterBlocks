@@ -50,7 +50,8 @@
 
         </TextBlock>
 
-        <Image Name="ImgPreview" Height="150" Margin="4"></Image>
+        <Image Name="ImgPreview" Height="150" Margin="4"
+               Source="{Binding PreviewImage}"></Image>
 
         <GroupBox Name="GbCommands" Padding="4">
             <GroupBox.Header>

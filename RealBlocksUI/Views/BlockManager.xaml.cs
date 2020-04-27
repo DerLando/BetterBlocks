@@ -16,7 +16,8 @@ namespace RealBlocksUI.Views
             this.DataContext = new BlockManagerViewModel(
                 docSn, 
                 new InstanceDefinitionEndpoint(), 
-                RealBlocksUIPlugIn.Mapper
+                RealBlocksUIPlugIn.Mapper,
+                new PreviewImageEndpoint()
                 );
         }
 

@@ -88,12 +88,6 @@
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RealBlocksUI.Library\RealBlocksUI.Library.csproj">
-      <Project>{EAC98BEC-01B3-44E0-9348-F525FC6EA666}</Project>
-      <Name>RealBlocksUI.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Views\BlockManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -106,6 +100,12 @@
   <ItemGroup>
     <Resource Include="Images\assembly_icon.png" />
     <Resource Include="Images\root_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RealBlocksUI.Library\RealBlocksUI.Library.csproj">
+      <Project>{eac98bec-01b3-44e0-9348-f525fc6ea666}</Project>
+      <Name>RealBlocksUI.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
