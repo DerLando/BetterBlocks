@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:RealBlocksUI.Converters"
+        xmlns:rc="clr-namespace:Rhino.UI.Controls;assembly=RhinoCommon"
+        xmlns:rc1="clr-namespace:RhinoWindows.Forms.Controls;assembly=RhinoWindows"
         mc:Ignorable="d" Background="White"
         Height="auto" Width="auto">
 
@@ -52,6 +54,11 @@
 
         <Image Name="ImgPreview" Height="150" Margin="4"
                Source="{Binding PreviewImage}"></Image>
+
+        <WindowsFormsHost>
+            <rc1:ViewportControl x:Name="RcViewportControl" Height="150"
+                                 />
+        </WindowsFormsHost>
 
         <GroupBox Name="GbCommands" Padding="4">
             <GroupBox.Header>
